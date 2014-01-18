@@ -1,0 +1,63 @@
+# /---------------------------------------------------------------------------
+# buriDefinitionMap: (NotRequired - Default 'map:{}')
+#
+# If you use the framework 'Buri', you should specify this property,
+# you can generate ENUM classes and behavior methods for Buri.
+#
+# Specification:
+# map:{
+#     ; activityDefinitionMap = map:{
+#         ; [Package] = map:{
+#             ; [Process] = map:{
+#                 ; status = list:{[Status] ; [Status] ; ...}
+#                 ; action = list:{[Action] ; [Action] ; ...}
+#             }
+#         }
+#     }
+#     ; tableProcessMap = map:{
+#         ; [Table] = list:{ [Package].[Process] ; [Package].[Process] ; ... }
+#     }
+# }
+#
+# Example:
+# map:{
+#     ; activityDefinitionMap = map:{
+#         ; 文書管理 = map:{
+#             ; 文書公開 = map:{
+#                 ; status = list:{レビュー待ち ; 差し戻し ; 公開待ち ; 公開中}
+#                 ; action = list:{next ; update ; delete ; 問題なし ; 手直し必要}
+#             }
+#         }
+#     }
+#     ; tableProcessMap = map:{
+#         ; DOCUMENT = list:{ 文書管理.文書公開 }
+#     }
+# }
+#
+map:{
+    # /- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # o activityDefinitionMap: (NotRequired - Default 'map:{}')
+    #  The definition of activities.
+    #  If you specify this property, you can use generated ENUM classes.
+    # 
+    ; activityDefinitionMap = map:{
+        ; 文書管理 = map:{
+            ; 文書公開 = map:{
+                ; status = list:{レビュー待ち ; 差し戻し ; 公開待ち ; 公開中}
+                ; action = list:{next ; update ; delete ; 問題なし ; 手直し必要}
+            }
+        }
+    }
+    # - - - - - - - - - -/
+
+    # /- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    # o tableProcessMap: (NotRequired - Default 'map:{}')
+    #  The relation between tables and processes.
+    #  If you specify this property, you can use generated behavior methods.
+    # 
+    ; tableProcessMap = map:{
+        ; DOCUMENT = list:{ 文書管理.文書公開 }
+    }
+    # - - - - - - - - - -/
+}
+# ----------------/

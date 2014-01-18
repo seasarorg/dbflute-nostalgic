@@ -1,0 +1,8 @@
+#Wed Dec 19 22:48:39 JST 2007
+DaoType=S2Dao
+DefaultResourcePath=/dbflute-oracle-example/src/main/resources
+DefaultRootPackage=org.seasar.dbflute.example.oracle
+DefaultSrcPath=/dbflute-oracle-example/src/main/java
+ServletPath=/dbflute-oracle-example
+WebContentsRoot=src/main/webapp/
+eclipse.preferences.version=1

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components>
+
+	<include path="j2ee-ldb.dicon"/>
+	<include path="dao-ldb.dicon"/>
+	
+</components>

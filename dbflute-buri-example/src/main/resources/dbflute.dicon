@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd">
+
+<components namespace="dbflute">
+    <include path="j2ee.dicon"/>
+    <include path="buri/dicon/buriBase.dicon"/>
+
+    <!-- The components of DBFlute Runtime. -->
+    <component name="introduction" class="com.example.dbflute.buri.dbflute.allcommon.DBFluteInitializer"/>
+    <component name="invokerAssistant" class="com.example.dbflute.buri.dbflute.allcommon.ImplementedInvokerAssistant"/>
+    <component name="commonColumnAutoSetupper" class="com.example.dbflute.buri.dbflute.allcommon.ImplementedCommonColumnAutoSetupper"/>
+    <component name="behaviorSelector" class="com.example.dbflute.buri.dbflute.allcommon.ImplementedBehaviorSelector"/>
+    <component name="behaviorCommandInvoker" class="org.seasar.dbflute.bhv.core.BehaviorCommandInvoker"/>
+
+    <!-- The components of Behavior. -->
+    <component name="buriBranchBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriBranchBhv"/>
+    <component name="buriDataBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriDataBhv"/>
+    <component name="buriDataPathHistoryBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriDataPathHistoryBhv"/>
+    <component name="buriPathBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriPathBhv"/>
+    <component name="buriStateBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriStateBhv"/>
+    <component name="buriStateUndoLogBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriStateUndoLogBhv"/>
+    <component name="buriStateUserBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriStateUserBhv"/>
+    <component name="buriTransactionBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriTransactionBhv"/>
+    <component name="buriUserBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriUserBhv"/>
+    <component name="documentBhv" class="com.example.dbflute.buri.dbflute.exbhv.DocumentBhv"/>
+    <component name="mstRoleBhv" class="com.example.dbflute.buri.dbflute.exbhv.MstRoleBhv"/>
+    <component name="mstUserBhv" class="com.example.dbflute.buri.dbflute.exbhv.MstUserBhv"/>
+    <component name="mstUserRoleBhv" class="com.example.dbflute.buri.dbflute.exbhv.MstUserRoleBhv"/>
+    <component name="buriPathDataBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriPathDataBhv"/>
+    <component name="buriPathDataUserBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriPathDataUserBhv"/>
+    <component name="buriPathHistoryDataBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriPathHistoryDataBhv"/>
+    <component name="buriPathHistoryDataUserBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriPathHistoryDataUserBhv"/>
+    <component name="buriAllRoundStateBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriAllRoundStateBhv"/>
+    <component name="buriAllRoundStateHistoryBhv" class="com.example.dbflute.buri.dbflute.exbhv.BuriAllRoundStateHistoryBhv"/>
+</components>

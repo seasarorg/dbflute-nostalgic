@@ -1,0 +1,266 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.seasar.dbflute</groupId>
+	<artifactId>dbflute-buri-example</artifactId>
+	<version>0.9.0</version>
+
+	<name>DBFlute Buri Example</name>
+	<description>The example project for DBFlute and Buri (and Oracle)</description>
+
+	<properties>
+		<seasar.version>2.4.39</seasar.version>
+		<dbflute.version>0.9.9.7F</dbflute.version>
+		<oracle.jdbc.version>11.1.0.6.0-Production+</oracle.jdbc.version>
+	</properties>
+
+	<url>http://dbflute.sandbox.seasar.org/</url>
+	<inceptionYear>2006</inceptionYear>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>The Seasar Foundation</name>
+		<url>http://www.seasar.org/</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>jflute</id>
+			<timezone>+9</timezone>
+		</developer>
+	</developers>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://www.seasar.org/issues/browse/DBFLUTE</url>
+	</issueManagement>
+	<mailingLists>
+		<mailingList>
+			<name>Seasar-user</name>
+			<subscribe>https://www.seasar.org/mailman/listinfo/seasar-user</subscribe>
+			<unsubscribe>https://www.seasar.org/mailman/listinfo/seasar-user</unsubscribe>
+			<post>seasar-user@ml.seasar.org</post>
+			<archive>https://www.seasar.org/mailman/listinfo/seasar-user</archive>
+		</mailingList>
+	</mailingLists>
+
+	<scm>
+		<connection>scm:svn:https://www.seasar.org/svn/sandbox/dbflute/trunk/dbflute-runtime/</connection>
+		<developerConnection>scm:svn:https://www.seasar.org/svn/sandbox/dbflute/trunk/dbflute-runtime/</developerConnection>
+		<url>http://svn.seasar.org/browse/?root=sandbox.dbflute</url>
+	</scm>
+
+	<build>
+		<defaultGoal>validate</defaultGoal>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.5</source>
+						<target>1.5</target>
+						<encoding>UTF-8</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<configuration>
+						<updateReleaseInfo>true</updateReleaseInfo>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<configuration>
+						<locales>en,ja</locales>
+						<inputEncoding>UTF-8</inputEncoding>
+						<outputEncoding>UTF-8</outputEncoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>source-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<docencoding>UTF-8</docencoding>
+					<charset>UTF-8</charset>
+					<links>
+						<link>http://java.sun.com/javaee/5/docs/api/</link>
+						<link>http://java.sun.com/j2se/1.5.0/ja/docs/ja/api/</link>
+						<link>http://aopalliance.sourceforge.net/doc/</link>
+						<link>http://jakarta.apache.org/commons/logging/apidocs/</link>
+						<link>http://www.csg.is.titech.ac.jp/~chiba/javassist/html/</link>
+						<link>http://www.ognl.org/2.6.9/Documentation/javadoc/</link>
+						<link>http://www.junit.org/junit/javadoc/4.3/</link>
+						<link>http://www.junit.org/junit/javadoc/3.8.1/</link>
+						<link>http://s2container.seasar.org/2.4/s2-framework/ja/apidocs/</link>
+						<link>http://s2container.seasar.org/2.4/s2-extension/ja/apidocs/</link>
+						<link>http://s2container.seasar.org/2.4/s2-tiger/ja/apidocs/</link>
+					</links>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>site</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<repository>
+			<uniqueVersion>false</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Snapshot Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+	
+	<repositories>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+		</repository>
+	    <repository>
+	      <snapshots>
+	        <enabled>true</enabled>
+	      </snapshots>
+	      <id>snapshot.maven.seasar.org</id>
+	      <name>The Seasar Foundation Maven2 Snapshot Repository</name>
+	      <url>http://maven.seasar.org/maven2-snapshot</url>
+	    </repository>
+	</repositories>
+
+	<dependencies>
+        <!-- for Compile -->
+		<dependency>
+			<groupId>org.seasar.container</groupId>
+			<artifactId>s2-tiger</artifactId>
+			<version>${seasar.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.easymock</groupId>
+					<artifactId>easymock</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.dbflute</groupId>
+			<artifactId>dbflute-runtime</artifactId>
+			<version>${dbflute.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.escafe.buri</groupId>
+			<artifactId>buri-core</artifactId>
+			<version>1.0.0</version>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.seasar.container</groupId>
+			        <artifactId>s2-framework</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.seasar.container</groupId>
+			        <artifactId>s2-extension</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.seasar.dao</groupId>
+			        <artifactId>s2-dao</artifactId>
+			    </exclusion>
+			    <exclusion>
+			        <groupId>org.seasar.dao</groupId>
+			        <artifactId>s2-dao-tiger</artifactId>
+			    </exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.dao</groupId>
+			<artifactId>s2-dao-tiger</artifactId>
+			<version>1.0.49</version>
+			<exclusions>
+			    <exclusion>
+			        <groupId>org.seasar.container</groupId>
+			        <artifactId>s2-extension</artifactId>
+			    </exclusion>
+			</exclusions>
+		</dependency>
+
+        <!-- for Runtime -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.14</version>
+            <type>jar</type>
+            <scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee_1.4_spec</artifactId>
+			<version>1.0</version>
+	    	<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jta_1.1_spec</artifactId>
+			<version>1.0</version>
+	    	<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ejb_3.0_spec</artifactId>
+			<version>1.0</version>
+	    	<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jpa_3.0_spec</artifactId>
+			<version>1.0</version>
+	    	<scope>runtime</scope>
+		</dependency>
+		
+        <!-- for System -->
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc</artifactId>
+			<version>${oracle.jdbc.version}</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/ojdbc.jar</systemPath>
+		</dependency>
+ 
+        <!-- for Test -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.2</version>
+            <type>jar</type>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+</project>

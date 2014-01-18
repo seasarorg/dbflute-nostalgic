@@ -1,0 +1,9 @@
+map:{
+	; baseDtoPackage = dbflute.ldb.other.flexdto.bs
+	; extendedDtoPackage = dbflute.ldb.other.flexdto
+	; baseDtoPrefix = Bs
+	; baseDtoSuffix = Dto
+	; extendedDtoPrefix = 
+	; extendedDtoSuffix = Dto
+	; javaToFlexNativeMap = map:{ Integer = String ; Long = String }
+}

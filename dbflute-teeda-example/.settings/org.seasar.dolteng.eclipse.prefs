@@ -1,0 +1,10 @@
+#Sun Jun 01 19:37:54 JST 2008
+DaoType=S2Dao
+DefaultResourcePath=/dbflute-teeda-example/src/main/resources
+DefaultRootPackage=com.example.dbflute.teeda
+DefaultSrcPath=/dbflute-teeda-example/src/main/java
+ServletPath=/dbflute-teeda-example
+UseDIMarker=false
+UsePageMarker=false
+WebContentsRoot=src/main/webapp/
+eclipse.preferences.version=1

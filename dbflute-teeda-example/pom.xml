@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.seasar.dbflute.example.approot</groupId>
+	<artifactId>dbflute-teeda-example</artifactId>
+	<version>1.0.0</version>
+	<packaging>war</packaging>
+
+	<name>DBFlute Teeda Example</name>
+	<description>The example project for SAStruts and DBFlute</description>
+
+	<properties>
+		<seasar.version>2.4.24</seasar.version>
+		<s2dao.version>1.0.49</s2dao.version>
+		<teeda.version>1.0.13</teeda.version>
+		<h2.jdbc.version>1.1.102</h2.jdbc.version>
+	</properties>
+
+	<build>
+		<defaultGoal>validate</defaultGoal>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>source-jar</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-eclipse-plugin</artifactId>
+					<configuration>
+						<wtpversion>1.5</wtpversion>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+	<distributionManagement>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2</url>
+		</repository>
+		<snapshotRepository>
+			<uniqueVersion>true</uniqueVersion>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Snapshot Repository</name>
+			<url>dav:https://www.seasar.org/maven/maven2-snapshot</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<repositories>
+		<repository>
+			<id>maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<id>snapshot.maven.seasar.org</id>
+			<name>The Seasar Foundation Maven2 Snapshot Repository</name>
+			<url>http://maven.seasar.org/maven2-snapshot</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>mave.seaser.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>snapshot.mave.seaser.org</id>
+			<name>The Seasar Foundation Maven2 Repository</name>
+			<url>http://maven.seasar.org/maven2-snapshot</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<dependencies>
+		<!-- =============== -->
+		<!-- |   compile   | -->
+		<!-- =============== -->
+		<!-- Main Library -->
+        <dependency>
+            <groupId>org.seasar.container</groupId>
+            <artifactId>s2-tiger</artifactId>
+            <version>${seasar.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.easymock</groupId>
+					<artifactId>easymock</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+		<dependency>
+			<groupId>org.seasar.dao</groupId>
+			<artifactId>s2-dao</artifactId>
+			<version>${s2dao.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.teeda</groupId>
+			<artifactId>teeda-extension</artifactId>
+			<version>${teeda.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.teeda</groupId>
+			<artifactId>teeda-ajax</artifactId>
+			<version>${teeda.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.teeda</groupId>
+			<artifactId>teeda-tiger</artifactId>
+			<version>${teeda.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.seasar.teeda</groupId>
+			<artifactId>teeda-xmlunit</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+	    <!-- TODO jflute required? -->
+	    <!-- 
+	    <dependency>
+	      <groupId>commons-fileupload</groupId>
+	      <artifactId>commons-fileupload</artifactId>
+	      <version>1.0</version>
+	      <scope>compile</scope>
+	    </dependency>
+	    <dependency>
+	      <groupId>org.apache.myfaces.tomahawk</groupId>
+	      <artifactId>tomahawk</artifactId>
+	      <version>1.1.1</version>
+	      <scope>compile</scope>
+	    </dependency>
+ 		-->
+
+		<!-- =============== -->
+		<!-- |   runtime   | -->
+		<!-- =============== -->
+		<!-- Logging Library -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+			<scope>runtime</scope>
+        </dependency>
+        <!-- JDBC Library -->
+	    <dependency>
+	    	<groupId>com.h2database</groupId>
+	    	<artifactId>h2</artifactId>
+	    	<version>${h2.jdbc.version}</version>
+	    	<scope>runtime</scope>
+	    </dependency>
+	    <!-- Javax Library -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-annotation_1.0_spec</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-interceptor_3.0_spec</artifactId>
+            <version>1.0</version>
+            <scope>runtime</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-j2ee_1.4_spec</artifactId>
+			<version>1.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jta_1.1_spec</artifactId>
+			<version>1.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-ejb_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jpa_3.0_spec</artifactId>
+			<version>1.0</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- ================ -->
+		<!-- |   provided   | -->
+		<!-- ================ -->
+		<!-- Javax Library -->
+		<!-- If you want to use J2EE 1.4 server(not Tomcat),
+			add geronimo-jta_1.1_spec-1.0-tsr.jar -->
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-jsp_2.0_spec</artifactId>
+            <version>1.0</version>
+			<scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_2.4_spec</artifactId>
+            <version>1.0</version>
+			<scope>provided</scope>
+        </dependency>
+
+		<!-- ============ -->
+		<!-- |   test   | -->
+		<!-- ============ -->
+        <!-- JUnit Library -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+	</dependencies>
+</project>

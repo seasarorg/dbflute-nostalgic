@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../../css/mainte.css" />
+	<title>会員登録</title>
+</head>
+
+<body>
+<form id="editForm">
+<h1>会員登録</h1>
+<span id="allMessages"></span>
+<hr />
+<div class="create">
+<table>
+	<tr>
+		<td>会員名</td>
+		<td><input type="text" id="memberName" /></td>
+	</tr>
+	<tr>
+		<td>誕生日</td>
+		<td><input id="memberBirthday" type="text" class="T_date" te:threshold="50" /></td>
+	</tr>
+	<tr>
+		<td>会員ステータス</td>
+		<td>
+			<select id="memberStatus">
+				<option value="hoge">テスト会員</option>
+			</select>
+		</td>
+	</tr>
+	<tr>
+		<td>会員アカウント</td>
+		<td><input id="memberAccount" type="text" /></td>
+	</tr>
+</table>
+<input type="hidden" id="memberStatusItemsSave" />
+<input type="submit" id="doOnceCreate" value="登録" />
+</div>
+<a id="goSearch" href="search.html">会員一覧</a>
+</form>
+</body>
+</html>

@@ -1,0 +1,6 @@
+map:{
+	; NEXT_LIBRARY = map:{
+		; LIBRARY_ID      = map:{columnAliasName = baseId}
+		; NEXT_LIBRARY_ID = map:{columnAliasName = nextId}
+	}
+}

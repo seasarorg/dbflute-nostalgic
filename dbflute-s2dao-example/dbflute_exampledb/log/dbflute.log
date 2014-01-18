@@ -1,0 +1,1279 @@
+2014-01-17 18:55:29,140 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+create procedure SP_RETURN_RESULT_SET()
+begin
+  select MEMBER_ID, MEMBER_NAME, BIRTHDATE, FORMALIZED_DATETIME, MEMBER_STATUS_CODE
+    from MEMBER;
+end;
+
+2014-01-17 18:55:29,142 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+create procedure SP_RETURN_RESULT_SET_MORE()
+begin
+  select MEMBER_ID, MEMBER_NAME, BIRTHDATE, FORMALIZED_DATETIME, MEMBER_STATUS_CODE
+    from MEMBER;
+  select * from MEMBER_STATUS;
+end;
+
+2014-01-17 18:55:29,145 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+create procedure SP_RETURN_RESULT_SET_WITH(
+      in v_in_char char(3)
+    , out v_out_varchar varchar(32)
+    , inout v_inout_varchar varchar(32)
+)
+begin
+  set v_out_varchar = 'qux';
+  set v_inout_varchar = 'quux';
+  select MEMBER_ID, MEMBER_NAME, BIRTHDATE, FORMALIZED_DATETIME, MEMBER_STATUS_CODE
+    from MEMBER
+   where MEMBER_STATUS_CODE = v_in_char;
+  select * from MEMBER_STATUS
+   where MEMBER_STATUS_CODE = v_in_char;
+end;
+
+2014-01-17 18:55:29,172 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- test for being called from Sql2Entity and Application Execution
+create procedure SP_TRANSACTION_INHERIT()
+begin
+  delete from MEMBER_LOGIN;
+end;
+
+2014-01-17 18:55:29,174 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=7 failure=0
+2014-01-17 18:55:29,174 [main] INFO  (DfSqlFileFireMan#fire():65) - ...Firing: replace-schema-90-vendorcheck.sql
+2014-01-17 18:55:29,184 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- =======================================================================================
+--                                                                            Vendor Check
+--                                                                            ============
+CREATE TABLE VENDOR_CHECK (
+	VENDOR_CHECK_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	TYPE_OF_CHAR CHAR(3),
+	TYPE_OF_VARCHAR VARCHAR(200),
+	TYPE_OF_TEXT TEXT,
+	TYPE_OF_TINYTEXT TINYTEXT,
+	TYPE_OF_MEDIUMTEXT MEDIUMTEXT,
+	TYPE_OF_LONGTEXT LONGTEXT,
+	TYPE_OF_NUMERIC_DECIMAL NUMERIC(5, 3),
+	TYPE_OF_NUMERIC_INTEGER NUMERIC(5, 0),
+	TYPE_OF_NUMERIC_BIGINT NUMERIC(12, 0),
+	TYPE_OF_DECIMAL_DECIMAL DECIMAL(5, 3),
+	TYPE_OF_DECIMAL_INTEGER DECIMAL(5, 0),
+	TYPE_OF_DECIMAL_BIGINT DECIMAL(12, 0),
+	TYPE_OF_INTEGER INTEGER,
+	TYPE_OF_BIGINT BIGINT,
+	TYPE_OF_FLOAT FLOAT,
+	TYPE_OF_DOUBLE DOUBLE,
+	TYPE_OF_DATE DATE,
+	TYPE_OF_DATETIME DATETIME,
+	TYPE_OF_TIMESTAMP TIMESTAMP,
+	TYPE_OF_TIME TIME,
+	TYPE_OF_YEAR YEAR,
+	TYPE_OF_BOOLEAN BOOLEAN,
+	TYPE_OF_BLOB BLOB(2000),
+	TYPE_OF_TINYBLOB TINYBLOB,
+	TYPE_OF_MEDIUMBLOB MEDIUMBLOB,
+	TYPE_OF_LONGBLOB LONGBLOB,
+	TYPE_OF_BINARY BINARY,
+	TYPE_OF_VARBINARY VARBINARY(1000),
+	TYPE_OF_ENUM ENUM('red','blue','yellow'),
+	TYPE_OF_SET SET('red','blue','yellow'),
+	COLUMN_EXCEPT_TEST INTEGER -- actually except
+)
+2014-01-17 18:55:29,256 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- =======================================================================================
+--                                                                               Long Name
+--                                                                               =========
+CREATE TABLE VENDOR_THE_LONG_AND_WINDING_TABLE_AND_COLUMN (
+	THE_LONG_AND_WINDING_TABLE_AND_COLUMN_ID BIGINT NOT NULL PRIMARY KEY,
+	THE_LONG_AND_WINDING_TABLE_AND_COLUMN_NAME VARCHAR(180) NOT NULL,
+	SHORT_NAME VARCHAR(200) NOT NULL,
+	SHORT_SIZE INTEGER NOT NULL,
+	UNIQUE (THE_LONG_AND_WINDING_TABLE_AND_COLUMN_NAME)
+)
+2014-01-17 18:55:29,286 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VENDOR_THE_LONG_AND_WINDING_TABLE_AND_COLUMN_REF (
+	THE_LONG_AND_WINDING_TABLE_AND_COLUMN_REF_ID BIGINT NOT NULL PRIMARY KEY,
+	THE_LONG_AND_WINDING_TABLE_AND_COLUMN_ID BIGINT NOT NULL,
+	THE_LONG_AND_WINDING_TABLE_AND_COLUMN_REF_DATE DATE NOT NULL,
+	SHORT_DATE DATE NOT NULL
+)
+2014-01-17 18:55:29,323 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VENDOR_THE_LONG_AND_WINDING_TABLE_AND_COLUMN_REF ADD CONSTRAINT FK_VENDOR_THE_LONG_AND_WINDING_TABLE_AND_COLUMN_REF
+ 	FOREIGN KEY (THE_LONG_AND_WINDING_TABLE_AND_COLUMN_ID)
+ 	REFERENCES VENDOR_THE_LONG_AND_WINDING_TABLE_AND_COLUMN (THE_LONG_AND_WINDING_TABLE_AND_COLUMN_ID)
+2014-01-17 18:55:29,434 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- =======================================================================================
+--                                                                              Large Data
+--                                                                              ==========
+-- for the test of large data
+-- creating index is executed at take-finally
+-- because of large data registered at load-data 
+CREATE TABLE VENDOR_LARGE_DATA (
+	LARGE_DATA_ID BIGINT NOT NULL PRIMARY KEY,
+	STRING_INDEX VARCHAR(180) NOT NULL,
+	STRING_NO_INDEX VARCHAR(180) NOT NULL,
+	STRING_UNIQUE_INDEX VARCHAR(180) NOT NULL,
+	INTFLG_INDEX INTEGER NOT NULL,
+	NUMERIC_INTEGER_INDEX NUMERIC(8, 0) NOT NULL,
+	NUMERIC_INTEGER_NO_INDEX NUMERIC(8, 0) NOT NULL,
+	UNIQUE (STRING_UNIQUE_INDEX)
+)
+2014-01-17 18:55:29,467 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- creating index after loading large data 
+CREATE TABLE VENDOR_LARGE_DATA_REF (
+	LARGE_DATA_REF_ID BIGINT NOT NULL PRIMARY KEY,
+	LARGE_DATA_ID BIGINT NOT NULL,
+	DATE_INDEX DATE NOT NULL,
+	DATE_NO_INDEX DATE NOT NULL,
+	TIMESTAMP_INDEX DATETIME NOT NULL,
+	TIMESTAMP_NO_INDEX DATETIME NOT NULL,
+	NULLABLE_DECIMAL_INDEX NUMERIC(12, 3),
+	NULLABLE_DECIMAL_NO_INDEX NUMERIC(12, 3),
+	SELF_PARENT_ID BIGINT
+)
+2014-01-17 18:55:29,483 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- =======================================================================================
+--                                                                               Name Auto
+--                                                                               =========
+-- /= = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of auto-generated constraint name
+-- = = = = = = = = = =/
+CREATE TABLE VENDOR_CONSTRAINT_NAME_AUTO_FOO (
+	CONSTRAINT_NAME_AUTO_FOO_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	CONSTRAINT_NAME_AUTO_FOO_NAME VARCHAR(50) NOT NULL,
+	UNIQUE (CONSTRAINT_NAME_AUTO_FOO_NAME)
+)
+2014-01-17 18:55:29,503 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VENDOR_CONSTRAINT_NAME_AUTO_BAR (
+	CONSTRAINT_NAME_AUTO_BAR_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	CONSTRAINT_NAME_AUTO_BAR_NAME VARCHAR(50) NOT NULL,
+	UNIQUE (CONSTRAINT_NAME_AUTO_BAR_NAME)
+)
+2014-01-17 18:55:29,543 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VENDOR_CONSTRAINT_NAME_AUTO_QUX (
+	CONSTRAINT_NAME_AUTO_QUX_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	CONSTRAINT_NAME_AUTO_QUX_NAME VARCHAR(50) NOT NULL,
+	UNIQUE (CONSTRAINT_NAME_AUTO_QUX_NAME)
+)
+2014-01-17 18:55:29,607 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE VENDOR_CONSTRAINT_NAME_AUTO_REF (
+	CONSTRAINT_NAME_AUTO_REF_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	CONSTRAINT_NAME_AUTO_FOO_ID NUMERIC(16) NOT NULL,
+	CONSTRAINT_NAME_AUTO_BAR_ID NUMERIC(16) NOT NULL,
+	CONSTRAINT_NAME_AUTO_QUX_ID NUMERIC(16) NOT NULL,
+	CONSTRAINT_NAME_AUTO_CORGE_ID NUMERIC(16) NOT NULL,
+	CONSTRAINT_NAME_AUTO_UNIQUE VARCHAR(50) NOT NULL,
+	FOREIGN KEY(CONSTRAINT_NAME_AUTO_FOO_ID) REFERENCES VENDOR_CONSTRAINT_NAME_AUTO_FOO(CONSTRAINT_NAME_AUTO_FOO_ID),
+	-- for test of schema diff
+	-- FOREIGN KEY(CONSTRAINT_NAME_AUTO_CORGE_ID) REFERENCES VENDOR_CONSTRAINT_NAME_AUTO_BAR(CONSTRAINT_NAME_AUTO_BAR_ID),
+	-- FOREIGN KEY(CONSTRAINT_NAME_AUTO_BAR_ID) REFERENCES VENDOR_CHECK(VENDOR_CHECK_ID),
+	FOREIGN KEY(CONSTRAINT_NAME_AUTO_BAR_ID) REFERENCES VENDOR_CONSTRAINT_NAME_AUTO_BAR(CONSTRAINT_NAME_AUTO_BAR_ID),
+	FOREIGN KEY(CONSTRAINT_NAME_AUTO_QUX_ID) REFERENCES VENDOR_CONSTRAINT_NAME_AUTO_QUX(CONSTRAINT_NAME_AUTO_QUX_ID),
+	UNIQUE (CONSTRAINT_NAME_AUTO_UNIQUE)
+)
+2014-01-17 18:55:29,698 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=10 failure=0
+2014-01-17 18:55:29,699 [main] INFO  (DfSqlFileFireMan#fire():65) - ...Firing: replace-schema-92-whitebox.sql
+2014-01-17 18:55:29,705 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = =
+-- for the test of over relation, referrer over
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_PURCHASE_REFERRER(
+    PURCHASE_REFERRER_ID BIGINT AUTO_INCREMENT NOT NULL,
+    PURCHASE_REFERRER_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (PURCHASE_REFERRER_ID)
+)
+2014-01-17 18:55:29,718 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_PURCHASE_REFERRER ADD CONSTRAINT FK_WHITE_PURCHASE_REFERRER
+	FOREIGN KEY (PURCHASE_REFERRER_ID)
+	REFERENCES PURCHASE (PURCHASE_ID)
+2014-01-17 18:55:29,739 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of over relation, split multiple FK
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_SPLIT_MULTIPLE_FK_BASE(
+    BASE_ID BIGINT NOT NULL,
+    FIRST_ID INTEGER NOT NULL,
+    NEXT_ID BIGINT NOT NULL,
+    SPLIT_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (BASE_ID)
+)
+2014-01-17 18:55:29,762 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_SPLIT_MULTIPLE_FK_NEXT(
+    NEXT_ID BIGINT NOT NULL,
+    SECOND_CODE CHAR(3) NOT NULL,
+    PRIMARY KEY (NEXT_ID)
+)
+2014-01-17 18:55:29,818 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_SPLIT_MULTIPLE_FK_REF(
+    FIRST_ID INTEGER NOT NULL,
+    SECOND_CODE CHAR(3) NOT NULL,
+    REF_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (FIRST_ID, SECOND_CODE)
+)
+2014-01-17 18:55:29,839 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_SPLIT_MULTIPLE_FK_CHILD(
+    CHILD_ID BIGINT NOT NULL,
+    BASE_ID BIGINT NOT NULL,
+    CHILD_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (CHILD_ID)
+)
+2014-01-17 18:55:29,861 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_SPLIT_MULTIPLE_FK_BASE ADD CONSTRAINT FK_WHITE_SPLIT_MULTIPLE_FK_NEXT
+	FOREIGN KEY (NEXT_ID)
+	REFERENCES WHITE_SPLIT_MULTIPLE_FK_NEXT (NEXT_ID)
+2014-01-17 18:55:29,952 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_SPLIT_MULTIPLE_FK_CHILD ADD CONSTRAINT FK_WHITE_SPLIT_MULTIPLE_FK_BASE
+	FOREIGN KEY (BASE_ID)
+	REFERENCES WHITE_SPLIT_MULTIPLE_FK_BASE (BASE_ID)
+2014-01-17 18:55:29,981 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = =
+-- for the test of implicit reverse FK
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_IMPLICIT_REVERSE_FK(
+    WHITE_IMPLICIT_REVERSE_FK_ID INTEGER AUTO_INCREMENT NOT NULL,
+    WHITE_IMPLICIT_REVERSE_FK_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (WHITE_IMPLICIT_REVERSE_FK_ID)
+)
+2014-01-17 18:55:30,026 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_IMPLICIT_REVERSE_FK_REF(
+    WHITE_IMPLICIT_REVERSE_FK_REF_ID INTEGER AUTO_INCREMENT NOT NULL,
+    WHITE_IMPLICIT_REVERSE_FK_ID INTEGER NOT NULL,
+    VALID_BEGIN_DATE DATE NOT NULL,
+    VALID_END_DATE DATE NOT NULL,
+    PRIMARY KEY (WHITE_IMPLICIT_REVERSE_FK_REF_ID),
+    UNIQUE (WHITE_IMPLICIT_REVERSE_FK_ID, VALID_BEGIN_DATE)
+)
+2014-01-17 18:55:30,063 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_IMPLICIT_REVERSE_FK_SUPPRESS(
+    WHITE_IMPLICIT_REVERSE_FK_SUPPRESS_ID INTEGER AUTO_INCREMENT NOT NULL,
+    WHITE_IMPLICIT_REVERSE_FK_ID INTEGER NOT NULL,
+    VALID_BEGIN_DATE DATE NOT NULL,
+    VALID_END_DATE DATE NOT NULL,
+    PRIMARY KEY (WHITE_IMPLICIT_REVERSE_FK_SUPPRESS_ID),
+    UNIQUE (WHITE_IMPLICIT_REVERSE_FK_ID, VALID_BEGIN_DATE)
+)
+2014-01-17 18:55:30,082 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = =
+-- for the test of compound primary key
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_COMPOUND_PK (
+	PK_FIRST_ID INTEGER NOT NULL,
+	PK_SECOND_ID INTEGER NOT NULL,
+	PK_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (PK_FIRST_ID, PK_SECOND_ID)
+)
+2014-01-17 18:55:30,103 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_COMPOUND_PK_REF (
+	MULTIPLE_FIRST_ID INTEGER NOT NULL,
+	MULTIPLE_SECOND_ID INTEGER NOT NULL,
+	REF_FIRST_ID INTEGER NOT NULL,
+	REF_SECOND_ID INTEGER NOT NULL,
+	PRIMARY KEY (MULTIPLE_FIRST_ID, MULTIPLE_SECOND_ID)
+)
+2014-01-17 18:55:30,119 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_COMPOUND_PK_REF ADD CONSTRAINT FK_WHITE_COMPOUND_PK_REF
+	FOREIGN KEY (REF_FIRST_ID, REF_SECOND_ID)
+	REFERENCES WHITE_COMPOUND_PK (PK_FIRST_ID, PK_SECOND_ID)
+2014-01-17 18:55:30,184 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- for the test of multiple compound key
+CREATE TABLE WHITE_COMPOUND_PK_REF_NEST (
+	COMPOUND_PK_REF_NEST_ID INTEGER NOT NULL PRIMARY KEY,
+	FOO_MULTIPLE_ID INTEGER NOT NULL,
+	BAR_MULTIPLE_ID INTEGER NOT NULL,
+	QUX_MULTIPLE_ID INTEGER NOT NULL
+)
+2014-01-17 18:55:30,202 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_COMPOUND_PK_REF_NEST ADD CONSTRAINT FK_WHITE_COMPOUND_PK_REF_NEST_FOO_BAR
+	FOREIGN KEY (FOO_MULTIPLE_ID, BAR_MULTIPLE_ID)
+	REFERENCES WHITE_COMPOUND_PK_REF (MULTIPLE_FIRST_ID, MULTIPLE_SECOND_ID)
+2014-01-17 18:55:30,228 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_COMPOUND_PK_REF_NEST ADD CONSTRAINT FK_WHITE_COMPOUND_PK_REF_NEST_BAR_QUX
+	FOREIGN KEY (BAR_MULTIPLE_ID, QUX_MULTIPLE_ID)
+	REFERENCES WHITE_COMPOUND_PK_REF (MULTIPLE_FIRST_ID, MULTIPLE_SECOND_ID)
+2014-01-17 18:55:30,269 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = 
+-- for the test of unique-key FK
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_UQ_FK (
+	UQ_FK_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	UQ_FK_CODE CHAR(3) NOT NULL,
+	UNIQUE (UQ_FK_CODE)
+)
+2014-01-17 18:55:30,301 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_UQ_FK_REF (
+	UQ_FK_REF_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	FK_TO_PK_ID NUMERIC(16) NOT NULL,
+	FK_TO_UQ_CODE CHAR(3) NOT NULL,
+	COMPOUND_UQ_FIRST_CODE CHAR(3) NOT NULL,
+	COMPOUND_UQ_SECOND_CODE CHAR(3) NOT NULL,
+	UNIQUE (COMPOUND_UQ_FIRST_CODE, COMPOUND_UQ_SECOND_CODE)
+)
+2014-01-17 18:55:30,325 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_UQ_FK_REF ADD CONSTRAINT FK_WHITE_UQ_FK_REF_PK
+	FOREIGN KEY (FK_TO_PK_ID) REFERENCES WHITE_UQ_FK (UQ_FK_ID)
+2014-01-17 18:55:30,386 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_UQ_FK_REF ADD CONSTRAINT FK_WHITE_UQ_FK_REF_UQ
+	FOREIGN KEY (FK_TO_UQ_CODE) REFERENCES WHITE_UQ_FK (UQ_FK_CODE)
+2014-01-17 18:55:30,492 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- for the test of compound unique key
+-- and the test of same name key
+CREATE TABLE WHITE_UQ_FK_REF_NEST (
+	UQ_FK_REF_NEST_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	COMPOUND_UQ_FIRST_CODE CHAR(3) NOT NULL,
+	COMPOUND_UQ_SECOND_CODE CHAR(3) NOT NULL
+)
+2014-01-17 18:55:30,512 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_UQ_FK_REF_NEST ADD CONSTRAINT FK_WHITE_UQ_FK_REF_NEST_UQ
+	FOREIGN KEY (COMPOUND_UQ_FIRST_CODE, COMPOUND_UQ_SECOND_CODE)
+	REFERENCES WHITE_UQ_FK_REF (COMPOUND_UQ_FIRST_CODE, COMPOUND_UQ_SECOND_CODE)
+2014-01-17 18:55:30,568 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_UQ_FK_WITHOUT_PK (
+	UQ_FK_CODE CHAR(3) NOT NULL,
+	UQ_FK_NAME VARCHAR(64) NOT NULL,
+	UNIQUE (UQ_FK_CODE)
+)
+2014-01-17 18:55:30,602 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_UQ_FK_WITHOUT_PK_REF (
+	UQ_FK_REF_ID NUMERIC(16) NOT NULL,
+	FK_TO_UQ_CODE CHAR(3) NOT NULL
+)
+2014-01-17 18:55:30,743 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_UQ_FK_WITHOUT_PK_REF ADD CONSTRAINT FK_WHITE_UQ_FK_WITHOUT_PK_REF
+	FOREIGN KEY (FK_TO_UQ_CODE) REFERENCES WHITE_UQ_FK_WITHOUT_PK (UQ_FK_CODE)
+2014-01-17 18:55:30,769 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = 
+-- for the test of no-primary-key table
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_NO_PK (
+	NO_PK_ID NUMERIC(16) NOT NULL,
+	NO_PK_NAME VARCHAR(32),
+	NO_PK_INTEGER INTEGER
+)
+2014-01-17 18:55:30,784 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE VIEW WHITE_NO_PK_RELATION as
+select product.PRODUCT_ID
+     , product.PRODUCT_NAME
+     , product.PRODUCT_HANDLE_CODE
+     , product.PRODUCT_STATUS_CODE
+     , (select max(purchase.PURCHASE_DATETIME)
+          from PURCHASE purchase
+         where purchase.PRODUCT_ID = product.PRODUCT_ID
+       ) as LATEST_PURCHASE_DATETIME
+  from PRODUCT product
+2014-01-17 18:55:30,793 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of variant relation (biz-many-to-one)
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_VARIANT_RELATION_MASTER_FOO(
+    MASTER_FOO_ID BIGINT NOT NULL,
+    MASTER_FOO_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (MASTER_FOO_ID)
+)
+2014-01-17 18:55:30,803 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_VARIANT_RELATION_MASTER_BAR(
+    MASTER_BAR_ID BIGINT NOT NULL,
+    MASTER_BAR_NAME VARCHAR(200) NOT NULL,
+    PRIMARY KEY (MASTER_BAR_ID)
+)
+2014-01-17 18:55:30,823 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_VARIANT_RELATION_MASTER_QUX(
+    MASTER_QUX_ID BIGINT NOT NULL,
+    MASTER_QUX_NAME VARCHAR(200) NOT NULL,
+    QUX_TYPE_CODE CHAR(3) NOT NULL,
+    PRIMARY KEY (MASTER_QUX_ID)
+)
+2014-01-17 18:55:30,838 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_VARIANT_RELATION_MASTER_CORGE(
+    MASTER_CORGE_ID BIGINT NOT NULL,
+    MASTER_CORGE_NAME VARCHAR(200) NOT NULL,
+    CORGE_TYPE_CODE CHAR(3) NOT NULL,
+    PRIMARY KEY (MASTER_CORGE_ID)
+)
+2014-01-17 18:55:30,886 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_VARIANT_RELATION_REFERRER(
+    REFERRER_ID BIGINT NOT NULL,
+    VARIANT_MASTER_ID BIGINT NOT NULL,
+    MASTER_TYPE_CODE CHAR(3) NOT NULL,
+    PRIMARY KEY (REFERRER_ID)
+)
+2014-01-17 18:55:30,920 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of all-in-one table classification (biz-many-to-one)
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_ALL_IN_ONE_CLS_CATEGORY (
+	CLS_CATEGORY_CODE CHAR(3) NOT NULL,
+	CLS_CATEGORY_NAME VARCHAR(20) NOT NULL,
+	DESCRIPTION VARCHAR(50) NOT NULL,
+	PRIMARY KEY (CLS_CATEGORY_CODE)
+)
+2014-01-17 18:55:30,952 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_ALL_IN_ONE_CLS_ELEMENT (
+	CLS_CATEGORY_CODE CHAR(3) NOT NULL,
+	CLS_ELEMENT_CODE CHAR(3) NOT NULL,
+	CLS_ELEMENT_NAME VARCHAR(20) NOT NULL,
+	ATTRIBUTE_EXP TEXT NOT NULL,
+	PRIMARY KEY (CLS_CATEGORY_CODE, CLS_ELEMENT_CODE)
+)
+2014-01-17 18:55:30,991 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_ALL_IN_ONE_CLS_ELEMENT ADD CONSTRAINT FK_WHITE_ALL_IN_ONE_CLS_ELEMENT_CATEGORY
+	FOREIGN KEY (CLS_CATEGORY_CODE)
+	REFERENCES WHITE_ALL_IN_ONE_CLS_CATEGORY (CLS_CATEGORY_CODE)
+2014-01-17 18:55:31,033 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- also for the test of no implicit reverse FK
+CREATE TABLE WHITE_ALL_IN_ONE_CLS_COMPOUND_PK_REF (
+	FOO_CODE CHAR(3) NOT NULL,
+	BAR_CODE CHAR(3) NOT NULL,
+	QUX_CODE CHAR(3) NOT NULL,
+	PRIMARY KEY (FOO_CODE, BAR_CODE, QUX_CODE)
+)
+2014-01-17 18:55:31,085 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_ALL_IN_ONE_CLS_NORMAL_COL_REF (
+	CLS_REF_ID INTEGER NOT NULL,
+	FOO_CODE CHAR(3) NOT NULL,
+	BAR_CODE CHAR(3) NOT NULL,
+	QUX_CODE CHAR(3) NOT NULL,
+	PRIMARY KEY (FOO_CODE, BAR_CODE, QUX_CODE)
+)
+2014-01-17 18:55:31,119 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of columnExcept on databaseInfoMap.dfprop
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_COLUMN_EXCEPT (
+	EXCEPT_COLUMN_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	COLUMN_EXCEPT_TEST INTEGER -- actually NOT except
+)
+2014-01-17 18:55:31,140 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_COLUMN_EXCEPT_GEN_ONLY (
+	GEN_ONLY_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	GEN_ONLY_NAME VARCHAR(200) NOT NULL,
+	THIS_IS_GEN_ONLY VARCHAR(200)
+)
+2014-01-17 18:55:31,162 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = =
+-- for the test of MyselfInScopeSubQuery
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_MYSELF (
+	MYSELF_ID integer NOT NULL PRIMARY KEY,
+	MYSELF_NAME varchar(80) NOT NULL
+)
+2014-01-17 18:55:31,185 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_MYSELF_CHECK ( 
+	MYSELF_CHECK_ID integer NOT NULL PRIMARY KEY,
+	MYSELF_CHECK_NAME varchar(80) NOT NULL,
+	MYSELF_ID integer
+)
+2014-01-17 18:55:31,212 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_MYSELF_CHECK ADD CONSTRAINT FK_WHITE_MYSELF_CHECK_SELF
+	FOREIGN KEY (MYSELF_ID) REFERENCES WHITE_MYSELF (MYSELF_ID)
+2014-01-17 18:55:31,233 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = 
+-- for the test of self reference
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_SELF_REFERENCE (
+	SELF_REFERENCE_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	SELF_REFERENCE_NAME VARCHAR(200) NOT NULL,
+	PARENT_ID NUMERIC(16)
+)
+2014-01-17 18:55:31,281 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_SELF_REFERENCE ADD CONSTRAINT FK_WHITE_SELF_REFERENCE_PARENT
+	FOREIGN KEY (PARENT_ID) REFERENCES WHITE_SELF_REFERENCE (SELF_REFERENCE_ID)
+2014-01-17 18:55:31,313 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_SELF_REFERENCE_REF_ONE (
+	SELF_REFERENCE_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	SELF_REFERENCE_REF_ONE_NAME VARCHAR(200) NOT NULL
+)
+2014-01-17 18:55:31,355 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_SELF_REFERENCE_REF_ONE ADD CONSTRAINT FK_WHITE_SELF_REFERENCE_REF_ONE
+	FOREIGN KEY (SELF_REFERENCE_ID) REFERENCES WHITE_SELF_REFERENCE (SELF_REFERENCE_ID)
+2014-01-17 18:55:31,422 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of binary data type (e.g. image file)
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_BINARY (
+	BINARY_ID BIGINT AUTO_INCREMENT NOT NULL,
+	BINARY_DATA BINARY,
+	BLOB_DATA BLOB,
+	PRIMARY KEY (BINARY_ID)
+)
+2014-01-17 18:55:31,436 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of implicit conversion foreign key
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_IMPLICIT_CONV_INTEGER (
+	IMPLICIT_CONV_INTEGER_ID INTEGER NOT NULL,
+	IMPLICIT_CONV_NUMERIC_ID INTEGER NOT NULL,
+	IMPLICIT_CONV_STRING_ID INTEGER NOT NULL,
+	IMPLICIT_CONV_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (IMPLICIT_CONV_INTEGER_ID)
+)
+2014-01-17 18:55:31,458 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_IMPLICIT_CONV_NUMERIC (
+	IMPLICIT_CONV_NUMERIC_ID NUMERIC(20, 0) NOT NULL,
+	IMPLICIT_CONV_INTEGER_ID NUMERIC(20, 0) NOT NULL,
+	IMPLICIT_CONV_STRING_ID NUMERIC(20, 0) NOT NULL,
+	IMPLICIT_CONV_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (IMPLICIT_CONV_NUMERIC_ID)
+)
+2014-01-17 18:55:31,539 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_IMPLICIT_CONV_STRING (
+	IMPLICIT_CONV_STRING_ID VARCHAR(10) NOT NULL,
+	IMPLICIT_CONV_INTEGER_ID VARCHAR(10) NOT NULL,
+	IMPLICIT_CONV_NUMERIC_ID VARCHAR(10) NOT NULL,
+	IMPLICIT_CONV_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (IMPLICIT_CONV_STRING_ID)
+)
+2014-01-17 18:55:31,648 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = =
+-- for the test of table except generate-only
+-- = = = = = = = = = =/
+-- except completely (no getting meta data)
+CREATE TABLE WHITE_TABLE_EXCEPT_NOMETA (
+	NOMETA_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	NOMETA_NAME VARCHAR(200) NOT NULL
+)
+2014-01-17 18:55:31,712 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- generated referred from generate-only table
+CREATE TABLE WHITE_TABLE_EXCEPT_GEN_HEAD (
+	GEN_HEAD_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	GEN_HEAD_NAME VARCHAR(200) NOT NULL,
+	NOMETA_ID NUMERIC(16)
+)
+2014-01-17 18:55:31,734 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_TABLE_EXCEPT_GEN_HEAD ADD CONSTRAINT FK_WHITE_TABLE_EXCEPT_GEN_HEAD_NOMETA
+	FOREIGN KEY (NOMETA_ID) REFERENCES WHITE_TABLE_EXCEPT_NOMETA (NOMETA_ID)
+2014-01-17 18:55:31,864 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- except generate-only referring generated table
+CREATE TABLE WHITE_TABLE_EXCEPT_GEN_ONLY (
+	GEN_ONLY_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	GEN_ONLY_NAME VARCHAR(200) NOT NULL,
+	GEN_HEAD_ID NUMERIC(16),
+	NOMETA_ID NUMERIC(16)
+)
+2014-01-17 18:55:31,889 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_TABLE_EXCEPT_GEN_ONLY ADD CONSTRAINT FK_WHITE_TABLE_EXCEPT_GEN_ONLY_HEAD
+	FOREIGN KEY (GEN_HEAD_ID) REFERENCES WHITE_TABLE_EXCEPT_GEN_HEAD (GEN_HEAD_ID)
+2014-01-17 18:55:31,960 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_TABLE_EXCEPT_GEN_ONLY ADD CONSTRAINT FK_WHITE_TABLE_EXCEPT_GEN_ONLY_NOMETA
+	FOREIGN KEY (NOMETA_ID) REFERENCES WHITE_TABLE_EXCEPT_NOMETA (NOMETA_ID)
+2014-01-17 18:55:32,104 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- generated referring except gen-only
+CREATE TABLE WHITE_TABLE_EXCEPT_GEN_REF (
+	GEN_REF_ID NUMERIC(16) NOT NULL PRIMARY KEY,
+	GEN_REF_NAME VARCHAR(200) NOT NULL,
+	GEN_ONLY_ID NUMERIC(16)
+)
+2014-01-17 18:55:32,127 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_TABLE_EXCEPT_GEN_REF ADD CONSTRAINT FK_WHITE_TABLE_EXCEPT_GEN_REF_ONLY
+	FOREIGN KEY (GEN_ONLY_ID) REFERENCES WHITE_TABLE_EXCEPT_GEN_ONLY (GEN_ONLY_ID)
+2014-01-17 18:55:32,163 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of ReplaceSchema delimiter data loading
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_DELIMITER (
+	DELIMITER_ID BIGINT AUTO_INCREMENT NOT NULL,
+	NUMBER_NULLABLE INTEGER,
+	STRING_CONVERTED VARCHAR(200),
+	STRING_NON_CONVERTED VARCHAR(200),
+	DATE_DEFAULT DATE NOT NULL,
+	PRIMARY KEY (DELIMITER_ID)
+)
+2014-01-17 18:55:32,192 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of ReplaceSchema excel data loading
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_XLS_MAN (
+	XLS_MAN_ID BIGINT AUTO_INCREMENT NOT NULL,
+	STRING_CONVERTED VARCHAR(200),
+	TIMESTAMP_CONVERTED DATETIME,
+	PRIMARY KEY (XLS_MAN_ID)
+)
+2014-01-17 18:55:32,209 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of ReplaceSchema logging for LoadData
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_LOAD_DATA (
+	LOAD_DATA_ID BIGINT NOT NULL,
+	LOAD_DATA_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (LOAD_DATA_ID)
+)
+2014-01-17 18:55:32,259 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of ReplaceSchema logging for LoadData
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_SUPPRESS_DEF_CHECK (
+	DEF_CHECK_ID BIGINT NOT NULL,
+	DEF_CHECK_NAME VARCHAR(200) NOT NULL,
+	PRIMARY KEY (DEF_CHECK_ID)
+)
+2014-01-17 18:55:32,302 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of escaped dfprop
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_ESCAPED_DFPROP (
+	ESCAPED_DFPROP_CODE CHAR(3) NOT NULL,
+	ESCAPED_DFPROP_NAME VARCHAR(20),
+	PRIMARY KEY (ESCAPED_DFPROP_CODE)
+)
+2014-01-17 18:55:32,329 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of escaped java-doc comment
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_ESCAPED_JAVA_DOC (
+	ESCAPED_JAVA_DOC_CODE CHAR(3) NOT NULL,
+	ESCAPED_JAVA_DOC_NAME VARCHAR(20),
+	PRIMARY KEY (ESCAPED_JAVA_DOC_CODE)
+)
+2014-01-17 18:55:32,366 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of line separator comment
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_LINE_SEP_COMMENT (
+	LINE_SEP_COMMENT_CODE CHAR(3) NOT NULL,
+	LINE_SEP_COMMENT_NAME VARCHAR(20),
+	PRIMARY KEY (LINE_SEP_COMMENT_CODE)
+)
+2014-01-17 18:55:32,388 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of deprecated classification element
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_DEPRECATED_CLS_ELEMENT (
+	DEPRECATED_CLS_ELEMENT_CODE CHAR(3) NOT NULL,
+	DEPRECATED_CLS_ELEMENT_NAME VARCHAR(20),
+	PRIMARY KEY (DEPRECATED_CLS_ELEMENT_CODE)
+)
+2014-01-17 18:55:32,403 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = = = = = = =
+-- for the test of DB comment
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_DB_COMMENT (
+	DB_COMMENT_CODE CHAR(3) NOT NULL COMMENT 'Normal: this is normal comment.',
+	DB_COMMENT_NAME VARCHAR(20) COMMENT 'JavaDocHeadache: e.g. /*BEGIN*/, @ @foo <br />',
+	PRIMARY KEY (DB_COMMENT_CODE)
+)
+2014-01-17 18:55:32,436 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = 
+-- for the test of quoted table name
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_QUOTED (
+	"SELECT" INTEGER NOT NULL PRIMARY KEY,
+	"FROM" VARCHAR(200)
+)
+2014-01-17 18:55:32,449 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_QUOTED_REF (
+	"WHERE" INTEGER NOT NULL PRIMARY KEY,
+	"ORDER" INTEGER
+)
+2014-01-17 18:55:32,461 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_QUOTED_REF ADD CONSTRAINT FK_WHITE_QUOTED_REF
+	FOREIGN KEY ("ORDER") REFERENCES WHITE_QUOTED ("SELECT")
+2014-01-17 18:55:32,547 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- /= = = = = = = = = = = = = = = = = = = =
+-- for the test of program reservation word
+-- = = = = = = = = = =/
+CREATE TABLE WHITE_PG_RESERV (
+	CLASS integer NOT NULL PRIMARY KEY,
+	"CASE" integer,
+	PACKAGE integer,
+	"DEFAULT" integer,
+	NEW integer,
+	NATIVE integer,
+	VOID integer,
+	PUBLIC integer,
+	PROTECTED integer,
+	PRIVATE integer,
+	INTERFACE integer,
+	ABSTRACT integer,
+	FINAL integer,
+	FINALLY integer,
+	"RETURN" integer,
+	"DOUBLE" integer,
+	"FLOAT" integer,
+	SHORT integer,
+	TYPE char(3),
+	RESERV_NAME varchar(32) NOT NULL
+)
+2014-01-17 18:55:32,577 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+CREATE TABLE WHITE_PG_RESERV_REF (
+	REF_ID integer NOT NULL PRIMARY KEY,
+	CLASS integer
+)
+2014-01-17 18:55:32,709 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE WHITE_PG_RESERV_REF ADD CONSTRAINT FK_WHITE_PG_RESERV_REF_CLASS
+	FOREIGN KEY (CLASS) REFERENCES WHITE_PG_RESERV (CLASS)
+2014-01-17 18:55:32,771 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=74 failure=0
+2014-01-17 18:55:32,772 [main] INFO  (DfSqlFileFireMan#fire():90) - {Create Schema}: success=133 failure=0 (in 6 files)
+2014-01-17 18:55:32,773 [main] INFO  (DfCreateSchemaProcess#destroyChangeUserConnection():542) - ...Closing connections to change-users: [system]
+2014-01-17 18:55:32,911 [main] INFO  (DfLoadDataProcess#execute():129) - 
+2014-01-17 18:55:32,912 [main] INFO  (DfLoadDataProcess#execute():130) - * * * * * * * * * * *
+2014-01-17 18:55:32,912 [main] INFO  (DfLoadDataProcess#execute():131) - *                   *
+2014-01-17 18:55:32,912 [main] INFO  (DfLoadDataProcess#execute():132) - * Load Data         *
+2014-01-17 18:55:32,912 [main] INFO  (DfLoadDataProcess#execute():133) - *                   *
+2014-01-17 18:55:32,913 [main] INFO  (DfLoadDataProcess#execute():134) - * * * * * * * * * * *
+2014-01-17 18:55:32,994 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:32,997 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/common/xls/10-master.xls)
+2014-01-17 18:55:32,997 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:33,919 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:33,919 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:33,919 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:33,998 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:34,153 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_STATUS:{PRV, 仮会員, 入会直後のステータスで一部のサイトサービスが利用可能, 3}
+2014-01-17 18:55:34,302 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_STATUS:{FML, 正式会員, 正式な会員としてサイトサービスが利用可能, 1}
+2014-01-17 18:55:34,303 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_STATUS:{WDL, 退会会員, 退会が確定した会員でサイトサービスはダメ, 2}
+2014-01-17 18:55:34,333 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to MEMBER_STATUS
+2014-01-17 18:55:34,344 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - REGION:{1, アメリカ}
+2014-01-17 18:55:34,344 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - REGION:{2, カナダ}
+2014-01-17 18:55:34,345 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - REGION:{3, 中国}
+2014-01-17 18:55:34,345 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - REGION:{4, 千葉}
+2014-01-17 18:55:34,357 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 4 rows are loaded to REGION
+2014-01-17 18:55:34,359 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - SERVICE_RANK:{PLT, PLATINUM, 12.3, 1, platinum rank, 1}
+2014-01-17 18:55:34,361 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - SERVICE_RANK:{GLD, GOLD, 9.2, 1, gold rank, 2}
+2014-01-17 18:55:34,361 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - SERVICE_RANK:{SIL, SILVER, 6.74, 1, silver rank, 3}
+2014-01-17 18:55:34,362 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - SERVICE_RANK:{BRZ, BRONZE, 2, 1, bronze rank, 4}
+2014-01-17 18:55:34,363 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - SERVICE_RANK:{PLS, PLASTIC, 0.1, 0, plastic rank, 5}
+2014-01-17 18:55:34,372 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 5 rows are loaded to SERVICE_RANK
+2014-01-17 18:55:34,375 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WITHDRAWAL_REASON:{SIT, サイトが使いにくいから, 1}
+2014-01-17 18:55:34,376 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WITHDRAWAL_REASON:{OTH, その他理由, 4}
+2014-01-17 18:55:34,377 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WITHDRAWAL_REASON:{FRT, フリテンだから, 3}
+2014-01-17 18:55:34,378 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WITHDRAWAL_REASON:{PRD, 商品に魅力がないから, 2}
+2014-01-17 18:55:34,383 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 4 rows are loaded to WITHDRAWAL_REASON
+2014-01-17 18:55:34,386 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_CATEGORY:{MSC, 音楽, null}
+2014-01-17 18:55:34,387 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_CATEGORY:{FOD, 食品, null}
+2014-01-17 18:55:34,387 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_CATEGORY:{MCD, 音楽CD, MSC}
+2014-01-17 18:55:34,388 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_CATEGORY:{INS, 楽器, MSC}
+2014-01-17 18:55:34,388 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_CATEGORY:{HEB, ハーブ, FOD}
+2014-01-17 18:55:34,403 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 5 rows are loaded to PRODUCT_CATEGORY
+2014-01-17 18:55:34,405 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_STATUS:{ONS, 生産販売可能, 1}
+2014-01-17 18:55:34,406 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_STATUS:{PST, 生産中止, 2}
+2014-01-17 18:55:34,407 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT_STATUS:{SST, 販売中止, 3}
+2014-01-17 18:55:34,419 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to PRODUCT_STATUS
+2014-01-17 18:55:34,427 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:34,427 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/firstxls/92-whitebox-suppressdefcheck.xls)
+2014-01-17 18:55:34,428 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:34,453 [main] INFO  (DfLoadingControlProp#analyzeLoadingControlMap():343) - ...Analyzing loadingControlMap:
+2014-01-17 18:55:34,454 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():420) - map:{
+2014-01-17 18:55:34,454 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     isSuppressColumnDefCheck = true
+2014-01-17 18:55:34,454 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():436) - }
+2014-01-17 18:55:34,455 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SUPPRESS_DEF_CHECK:{1, Classification of Foo}
+2014-01-17 18:55:34,456 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SUPPRESS_DEF_CHECK:{2, Classification of Bar}
+2014-01-17 18:55:34,458 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SUPPRESS_DEF_CHECK:{3, Classification of Qux}
+2014-01-17 18:55:34,459 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SUPPRESS_DEF_CHECK:{4, Classification of Corge}
+2014-01-17 18:55:34,494 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 4 rows are loaded to WHITE_SUPPRESS_DEF_CHECK
+2014-01-17 18:55:34,508 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:34,509 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/tsv/UTF-8/90-VENDOR_LARGE_DATA.tsv)
+2014-01-17 18:55:34,509 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:34,511 [main] INFO  (DfLoadingControlProp#analyzeLoadingControlMap():343) - ...Analyzing loadingControlMap:
+2014-01-17 18:55:34,512 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():420) - map:{
+2014-01-17 18:55:34,512 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     loggingInsertType = PART
+2014-01-17 18:55:34,512 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     isSuppressBatchUpdate = false
+2014-01-17 18:55:34,513 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     isSuppressColumnDefCheck = false
+2014-01-17 18:55:34,513 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():423) -     dateAdjustmentMap = map:{
+2014-01-17 18:55:34,513 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():430) -     }
+2014-01-17 18:55:34,514 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():436) - }
+2014-01-17 18:55:34,514 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:34,514 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:34,515 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:34,530 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:34,588 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{1, foo1, foo1, foo1, 1, 1, 1}
+2014-01-17 18:55:34,591 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{2, foo2, foo2, foo2, 0, 2, 2}
+2014-01-17 18:55:34,600 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{3, foo3, foo3, foo3, 1, 3, 3}
+2014-01-17 18:55:34,608 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{4, foo4, foo4, foo4, 0, 4, 4}
+2014-01-17 18:55:34,609 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{5, foo5, foo5, foo5, 1, 5, 5}
+2014-01-17 18:55:34,610 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{6, foo6, foo6, foo6, 0, 6, 6}
+2014-01-17 18:55:34,611 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{7, foo7, foo7, foo7, 1, 7, 7}
+2014-01-17 18:55:34,612 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{8, foo8, foo8, foo8, 0, 8, 8}
+2014-01-17 18:55:34,613 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{9, foo9, foo9, foo9, 1, 9, 9}
+2014-01-17 18:55:34,614 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA:{10, foo10, foo10, foo10, 0, 10, 10}
+2014-01-17 18:55:34,614 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - VENDOR_LARGE_DATA:{... more several records}
+2014-01-17 18:55:35,017 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 300 rows are loaded to VENDOR_LARGE_DATA
+2014-01-17 18:55:35,017 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:35,018 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/tsv/UTF-8/91-VENDOR_LARGE_DATA_REF.tsv)
+2014-01-17 18:55:35,018 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:35,018 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:35,019 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:35,019 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:35,091 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:35,108 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{1, 2, 1900-01-01, 1900-01-01, 1970-01-01 00:00:00.000, 1970-01-01 00:00:00.000, null, null, null}
+2014-01-17 18:55:35,290 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{2, 3, 1900-01-02, 1900-01-02, 1970-01-01 04:00:20.006, 1970-01-01 04:00:20.006, null, null, 1}
+2014-01-17 18:55:35,307 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{3, 4, 1900-01-03, 1900-01-03, 1970-01-01 08:00:40.012, 1970-01-01 08:00:40.012, 3.3, 3.3, 1}
+2014-01-17 18:55:35,310 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{4, 5, 1900-01-04, 1900-01-04, 1970-01-01 12:01:00.018, 1970-01-01 12:01:00.018, null, null, 1}
+2014-01-17 18:55:35,313 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{5, 6, 1900-01-05, 1900-01-05, 1970-01-01 16:01:20.024, 1970-01-01 16:01:20.024, null, null, 1}
+2014-01-17 18:55:35,315 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{6, 7, 1900-01-06, 1900-01-06, 1970-01-01 20:01:40.030, 1970-01-01 20:01:40.030, 6.6, 6.6, 1}
+2014-01-17 18:55:35,325 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{7, 8, 1900-01-07, 1900-01-07, 1970-01-02 00:02:00.036, 1970-01-02 00:02:00.036, null, null, 1}
+2014-01-17 18:55:35,327 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{8, 9, 1900-01-08, 1900-01-08, 1970-01-02 04:02:20.042, 1970-01-02 04:02:20.042, null, null, 1}
+2014-01-17 18:55:35,330 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{9, 10, 1900-01-09, 1900-01-09, 1970-01-02 08:02:40.048, 1970-01-02 08:02:40.048, 9.9, 9.9, 1}
+2014-01-17 18:55:35,332 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - VENDOR_LARGE_DATA_REF:{10, 11, 1900-01-10, 1900-01-10, 1970-01-02 12:03:00.054, 1970-01-02 12:03:00.054, null, null, 1}
+2014-01-17 18:55:35,352 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - VENDOR_LARGE_DATA_REF:{... more several records}
+2014-01-17 18:55:38,204 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1000 rows are loaded to VENDOR_LARGE_DATA_REF
+2014-01-17 18:55:38,205 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:38,205 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/tsv/UTF-8/94-WHITE_QUOTED.tsv)
+2014-01-17 18:55:38,205 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:38,206 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:38,206 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:38,207 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:38,362 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:38,387 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{801, foo from tsv}
+2014-01-17 18:55:38,417 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{802, bar from tsv}
+2014-01-17 18:55:38,418 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{803, baz from tsv}
+2014-01-17 18:55:38,430 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_QUOTED
+2014-01-17 18:55:38,435 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:38,436 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/tsv/UTF-8/95-WHITE_QUOTED_REF.tsv)
+2014-01-17 18:55:38,436 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:38,437 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:38,437 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:38,437 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:38,451 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:38,490 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED_REF:{8001, 801}
+2014-01-17 18:55:38,491 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED_REF:{8002, 802}
+2014-01-17 18:55:38,491 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED_REF:{8003, 803}
+2014-01-17 18:55:38,505 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_QUOTED_REF
+2014-01-17 18:55:38,507 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:38,523 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/tsv/UTF-8/WHITE_DELIMITER.tsv)
+2014-01-17 18:55:38,525 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:38,526 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:38,526 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:38,527 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:38,545 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:38,642 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1001, 1, bar, foo, 2014-01-17 18:55:38.642}
+2014-01-17 18:55:38,644 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1002, null, bar, foo, 2014-01-17 18:55:38.643}
+2014-01-17 18:55:38,645 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1003, 3, f"oo, f"oo, 2014-01-17 18:55:38.645}
+2014-01-17 18:55:38,650 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1004, null, f	o
+o, f	o
+o, 2014-01-17 18:55:38.65}
+2014-01-17 18:55:38,651 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1005, 5, f"	o
+o	, f"	o
+o	, 2014-01-17 18:55:38.651}
+2014-01-17 18:55:38,652 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1006, 6, null, null, 2014-01-17 18:55:38.652}
+2014-01-17 18:55:38,657 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1007, 7, , null, 2014-01-17 18:55:38.656}
+2014-01-17 18:55:38,657 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1008, null, , null, 2014-01-17 18:55:38.657}
+2014-01-17 18:55:38,658 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1009, 9, foo", foo", 2014-01-17 18:55:38.658}
+2014-01-17 18:55:38,659 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_DELIMITER:{1010, 10, \\foo\\, \\foo\\, 2014-01-17 18:55:38.659}
+2014-01-17 18:55:38,660 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - WHITE_DELIMITER:{... more several records}
+2014-01-17 18:55:38,663 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 15 rows are loaded to WHITE_DELIMITER
+2014-01-17 18:55:38,664 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:38,665 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/csv/UTF-8/96-WHITE_SELF_REFERENCE.csv)
+2014-01-17 18:55:38,665 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:38,666 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:38,666 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:38,667 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:38,691 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:38,738 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{801, foo801, null}
+2014-01-17 18:55:38,739 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{802, bar802, 801}
+2014-01-17 18:55:38,740 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{803, baz803, 801}
+2014-01-17 18:55:38,766 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_SELF_REFERENCE
+2014-01-17 18:55:38,774 [main] INFO  (DfDelimiterDataWriterImpl#writeData():86) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:38,775 [main] INFO  (DfDelimiterDataWriterImpl#writeData():87) - writeData(playsql/data/ut/csv/UTF-8/98-WHITE_BINARY.csv)
+2014-01-17 18:55:38,775 [main] INFO  (DfDelimiterDataWriterImpl#writeData():88) - = = = = = = =/
+2014-01-17 18:55:38,776 [main] INFO  (DfTableExtractor#doGetTableList():67) - ...Getting tables:
+2014-01-17 18:55:38,776 [main] INFO  (DfTableExtractor#doGetTableList():68) -   schema = {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:38,776 [main] INFO  (DfTableExtractor#doGetTableList():69) -   types  = [TABLE, VIEW]
+2014-01-17 18:55:38,786 [main] INFO  (DfTableExtractor#doGetTableList():98) - white_table_except_nometa is excepted!
+2014-01-17 18:55:38,823 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_BINARY:{801, null, images/logo.png}
+2014-01-17 18:55:38,841 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_BINARY:{802, null, images/popup-flute.gif}
+2014-01-17 18:55:38,862 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_BINARY:{803, null, images/sakkoflute.jpg}
+2014-01-17 18:55:39,028 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_BINARY
+2014-01-17 18:55:39,051 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,051 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/20-member.xls)
+2014-01-17 18:55:39,051 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,311 [main] INFO  (DfLoadingControlProp#analyzeLoadingControlMap():343) - ...Analyzing loadingControlMap:
+2014-01-17 18:55:39,315 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():420) - map:{
+2014-01-17 18:55:39,316 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     loggingInsertType = PART
+2014-01-17 18:55:39,317 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     isSuppressBatchUpdate = false
+2014-01-17 18:55:39,317 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():433) -     isSuppressColumnDefCheck = false
+2014-01-17 18:55:39,317 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():423) -     dateAdjustmentMap = map:{
+2014-01-17 18:55:39,318 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         df:distanceYears = 6
+2014-01-17 18:55:39,318 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         df:distanceMonths = 72
+2014-01-17 18:55:39,318 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         df:distanceDays = 2208
+2014-01-17 18:55:39,319 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         df:originDate = 2008/01/01
+2014-01-17 18:55:39,320 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         $$ALL$$ = {$$ALL$$=addDay($distance), FORMALIZED_DATETIME=addDay(0), LOGIN_DATETIME=addDay(0)}
+2014-01-17 18:55:39,321 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         MEMBER = {BIRTHDATE=addDay(0)}
+2014-01-17 18:55:39,321 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         MEMBER_ADDRESS = {$$ALL$$=addDay(0)}
+2014-01-17 18:55:39,321 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():428) -         WHITE_XLS_MAN = {$$ALL$$=addDay(0)}
+2014-01-17 18:55:39,322 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():430) -     }
+2014-01-17 18:55:39,322 [main] INFO  (DfLoadingControlProp#showLoadingControlMap():436) - }
+2014-01-17 18:55:39,333 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{1, Stojkovic, Pixy, FML, 2007/12/01 11:01:10.000, 1965/03/03 00:00:00.000, 2014-01-17 18:55:39.325, foo, 2014-01-17 18:55:39.325, foo, 0}
+2014-01-17 18:55:39,335 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{2, Savicevic, Genius, PRV, null, 1966/09/15 00:00:00.000, 2014-01-17 18:55:39.334, foo, 2014-01-17 18:55:39.334, foo, 0}
+2014-01-17 18:55:39,343 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{3, Mijatovic, Mijato, WDL, 2005/10/03 13:03:30.000, null, 2014-01-17 18:55:39.343, foo, 2014-01-17 18:55:39.343, foo, 0}
+2014-01-17 18:55:39,344 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{4, Stankovic, Stanko, FML, 2006/09/04 14:04:40.000, 1978/09/11 00:00:00.000, 2014-01-17 18:55:39.344, foo, 2014-01-17 18:55:39.344, foo, 0}
+2014-01-17 18:55:39,346 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{5, Milosevic, Milose, FML, 2007/08/05 15:05:50.000, null, 2014-01-17 18:55:39.345, foo, 2014-01-17 18:55:39.345, foo, 0}
+2014-01-17 18:55:39,347 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{6, Mihajlovic, FreeKick, WDL, 2006/07/06 16:06:40.000, 1969/02/20 00:00:00.000, 2014-01-17 18:55:39.347, foo, 2014-01-17 18:55:39.347, foo, 0}
+2014-01-17 18:55:39,349 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{7, Og2000, Og2000, FML, 2005/06/07 17:07:30.000, null, 2014-01-17 18:55:39.348, foo, 2014-01-17 18:55:39.348, foo, 0}
+2014-01-17 18:55:39,363 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{8, Kezman, RedCard, FML, 2006/05/08 18:08:20.000, null, 2014-01-17 18:55:39.361, foo, 2014-01-17 18:55:39.361, foo, 0}
+2014-01-17 18:55:39,366 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{9, Maslovar, JEFUnited, FML, 2007/12/31 00:00:00.000, 1967/02/20 00:00:00.000, 2014-01-17 18:55:39.364, foo, 2014-01-17 18:55:39.364, foo, 0}
+2014-01-17 18:55:39,367 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER:{10, 諸葛亮孔明, ShokatsuGoGo, PRV, null, null, 2014-01-17 18:55:39.367, foo, 2014-01-17 18:55:39.367, foo, 0}
+2014-01-17 18:55:39,433 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - MEMBER:{... more several records}
+2014-01-17 18:55:39,463 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 20 rows are loaded to MEMBER
+2014-01-17 18:55:39,465 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{1, 1, 2007/03/24 00:00:00.000, 2015/12/31 00:00:00.000, Nagara, 4, 2014-01-17 18:55:39.465, foo, 2014-01-17 18:55:39.465, foo, 0}
+2014-01-17 18:55:39,471 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{2, 1, 1949/01/01 00:00:00.000, 1997/03/31 00:00:00.000, New York, 1, 2014-01-17 18:55:39.47, foo, 2014-01-17 18:55:39.47, foo, 0}
+2014-01-17 18:55:39,472 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{3, 1, 1997/04/01 00:00:00.000, 2000/09/30 00:00:00.000, Los Angels, 1, 2014-01-17 18:55:39.472, foo, 2014-01-17 18:55:39.472, foo, 0}
+2014-01-17 18:55:39,474 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{4, 1, 2000/10/01 00:00:00.000, 2003/08/31 00:00:00.000, New York, 1, 2014-01-17 18:55:39.473, foo, 2014-01-17 18:55:39.473, foo, 0}
+2014-01-17 18:55:39,475 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{5, 1, 2003/09/01 00:00:00.000, 2004/12/22 00:00:00.000, San Francisco Powell, 1, 2014-01-17 18:55:39.475, foo, 2014-01-17 18:55:39.475, foo, 0}
+2014-01-17 18:55:39,484 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{6, 1, 2004/12/23 00:00:00.000, 2006/03/23 00:00:00.000, San Francisco Daly City, 1, 2014-01-17 18:55:39.476, foo, 2014-01-17 18:55:39.476, foo, 0}
+2014-01-17 18:55:39,485 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{7, 1, 2016/01/01 00:00:00.000, 9999/12/31 00:00:00.000, Victoria, 2, 2014-01-17 18:55:39.485, foo, 2014-01-17 18:55:39.485, foo, 0}
+2014-01-17 18:55:39,486 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{8, 2, 2004/12/24 00:00:00.000, 9999/12/31 00:00:00.000, Ichihara, 4, 2014-01-17 18:55:39.486, foo, 2014-01-17 18:55:39.486, foo, 0}
+2014-01-17 18:55:39,487 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{9, 3, 2004/12/24 00:00:00.000, 2007/03/23 00:00:00.000, Mobara, 4, 2014-01-17 18:55:39.487, foo, 2014-01-17 18:55:39.487, foo, 0}
+2014-01-17 18:55:39,489 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_ADDRESS:{10, 4, 2002/11/01 00:00:00.000, 9999/12/31 00:00:00.000, Sousa, 4, 2014-01-17 18:55:39.488, foo, 2014-01-17 18:55:39.488, foo, 0}
+2014-01-17 18:55:39,490 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - MEMBER_ADDRESS:{... more several records}
+2014-01-17 18:55:39,540 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 20 rows are loaded to MEMBER_ADDRESS
+2014-01-17 18:55:39,542 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{1, 3, 2006/12/24 23:59:59.000, 0, FML}
+2014-01-17 18:55:39,543 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{2, 6, 2007/11/11 16:16:16.000, 0, FML}
+2014-01-17 18:55:39,544 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{3, 1, 2006/12/23 22:56:29.000, 0, FML}
+2014-01-17 18:55:39,545 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{4, 6, 2007/11/01 02:13:00.000, 0, FML}
+2014-01-17 18:55:39,545 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{5, 7, 2006/05/24 23:12:59.000, 0, FML}
+2014-01-17 18:55:39,546 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{6, 6, 2005/11/11 16:32:01.000, 0, PRV}
+2014-01-17 18:55:39,547 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{7, 6, 2006/01/28 23:59:59.000, 1, FML}
+2014-01-17 18:55:39,548 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{8, 6, 2007/11/09 16:23:00.000, 0, FML}
+2014-01-17 18:55:39,548 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{9, 8, 2006/12/22 23:59:59.000, 0, FML}
+2014-01-17 18:55:39,549 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_LOGIN:{10, 6, 2007/11/11 09:01:00.000, 0, FML}
+2014-01-17 18:55:39,550 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - MEMBER_LOGIN:{... more several records}
+2014-01-17 18:55:39,589 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 56 rows are loaded to MEMBER_LOGIN
+2014-01-17 18:55:39,593 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{1, aaa, 30符3飜は？, 自分で数えろ, 0, 2014-01-17 18:55:39.592, foo, 2014-01-17 18:55:39.592, foo, 0}
+2014-01-17 18:55:39,594 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{2, bbb, 50符2飜は？, 自分で数えろ, 2, 2014-01-17 18:55:39.594, foo, 2014-01-17 18:55:39.594, foo, 0}
+2014-01-17 18:55:39,595 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{3, ccc, 110符2飜は？, 自分で数えろ, 3, 2014-01-17 18:55:39.594, foo, 2014-01-17 18:55:39.594, foo, 0}
+2014-01-17 18:55:39,595 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{4, ddd, タンヤオ？, そう, 12, 2014-01-17 18:55:39.595, foo, 2014-01-17 18:55:39.595, foo, 0}
+2014-01-17 18:55:39,596 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{5, eee2, ピンフ？, そう, 410, 2014-01-17 18:55:39.596, foo, 2014-01-17 18:55:39.596, foo, 0}
+2014-01-17 18:55:39,597 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{6, fff, サンアンコウ？, そう, 2, 2014-01-17 18:55:39.597, foo, 2014-01-17 18:55:39.597, foo, 0}
+2014-01-17 18:55:39,597 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{7, ggg3, イーペーコウ？, そう, 4, 2014-01-17 18:55:39.597, foo, 2014-01-17 18:55:39.597, foo, 0}
+2014-01-17 18:55:39,607 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{8, hhh555, リャンペーコウ？, そう, 9, 2014-01-17 18:55:39.607, foo, 2014-01-17 18:55:39.607, foo, 0}
+2014-01-17 18:55:39,609 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{9, iii, サンペーコウはないよね？, 当たり前だ, 25, 2014-01-17 18:55:39.608, foo, 2014-01-17 18:55:39.608, foo, 0}
+2014-01-17 18:55:39,610 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SECURITY:{10, jjj, 私はイカサマしません, 実はする, 8, 2014-01-17 18:55:39.61, foo, 2014-01-17 18:55:39.61, foo, 0}
+2014-01-17 18:55:39,612 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - MEMBER_SECURITY:{... more several records}
+2014-01-17 18:55:39,626 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 20 rows are loaded to MEMBER_SECURITY
+2014-01-17 18:55:39,629 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{1, 1, 1234, PLT, 2014-01-17 18:55:39.629, foo, 2014-01-17 18:55:39.629, foo, 0}
+2014-01-17 18:55:39,630 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{2, 2, 2345, GLD, 2014-01-17 18:55:39.63, foo, 2014-01-17 18:55:39.63, foo, 0}
+2014-01-17 18:55:39,631 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{3, 3, 3456, GLD, 2014-01-17 18:55:39.631, foo, 2014-01-17 18:55:39.631, foo, 0}
+2014-01-17 18:55:39,632 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{4, 4, 875, BRZ, 2014-01-17 18:55:39.632, foo, 2014-01-17 18:55:39.632, foo, 0}
+2014-01-17 18:55:39,632 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{5, 5, 1111, BRZ, 2014-01-17 18:55:39.632, foo, 2014-01-17 18:55:39.632, foo, 0}
+2014-01-17 18:55:39,633 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{6, 6, 5422, SIL, 2014-01-17 18:55:39.633, foo, 2014-01-17 18:55:39.633, foo, 0}
+2014-01-17 18:55:39,634 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{7, 7, 24678, SIL, 2014-01-17 18:55:39.634, foo, 2014-01-17 18:55:39.634, foo, 0}
+2014-01-17 18:55:39,635 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{8, 8, 234, SIL, 2014-01-17 18:55:39.635, foo, 2014-01-17 18:55:39.635, foo, 0}
+2014-01-17 18:55:39,635 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{9, 9, 3, SIL, 2014-01-17 18:55:39.635, foo, 2014-01-17 18:55:39.635, foo, 0}
+2014-01-17 18:55:39,636 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_SERVICE:{10, 10, 98765, PLT, 2014-01-17 18:55:39.636, foo, 2014-01-17 18:55:39.636, foo, 0}
+2014-01-17 18:55:39,642 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - MEMBER_SERVICE:{... more several records}
+2014-01-17 18:55:39,666 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 20 rows are loaded to MEMBER_SERVICE
+2014-01-17 18:55:39,669 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_WITHDRAWAL:{3, null, 俺はワールドカップでPK外した…, 2013/01/09 23:59:59.123, 2014-01-17 18:55:39.667, foo, 2014-01-17 18:55:39.667, foo}
+2014-01-17 18:55:39,675 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_WITHDRAWAL:{6, SIT, null, 2013/11/27 16:00:00.456, 2014-01-17 18:55:39.674, foo, 2014-01-17 18:55:39.674, foo}
+2014-01-17 18:55:39,676 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_WITHDRAWAL:{13, PRD, 左サイドで走りすぎて疲れた, 2013/01/09 05:52:29.789, 2014-01-17 18:55:39.675, foo, 2014-01-17 18:55:39.675, foo}
+2014-01-17 18:55:39,677 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - MEMBER_WITHDRAWAL:{16, SIT, コバチが２人いるため, 2013/11/29 16:00:00.456, 2014-01-17 18:55:39.676, foo, 2014-01-17 18:55:39.676, foo}
+2014-01-17 18:55:39,681 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 4 rows are loaded to MEMBER_WITHDRAWAL
+2014-01-17 18:55:39,681 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,682 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/30-product.xls)
+2014-01-17 18:55:39,682 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,731 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{1, Cold Spring Harbor, BILLYJOEL-01, MCD, PST, 1100, 2014-01-17 18:55:39.731, foo, 2014-01-17 18:55:39.731, foo, 0}
+2014-01-17 18:55:39,732 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{2, Piano Man, BILLYJOEL-02, MCD, ONS, 1200, 2014-01-17 18:55:39.732, foo, 2014-01-17 18:55:39.732, foo, 0}
+2014-01-17 18:55:39,733 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{3, Streetlife Serenade, BILLYJOEL-03, MCD, ONS, 1300, 2014-01-17 18:55:39.733, foo, 2014-01-17 18:55:39.733, foo, 0}
+2014-01-17 18:55:39,734 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{4, Turnstiles, BILLYJOEL-04, MCD, ONS, 1400, 2014-01-17 18:55:39.734, foo, 2014-01-17 18:55:39.734, foo, 0}
+2014-01-17 18:55:39,734 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{5, The Stranger, BILLYJOEL-05, MCD, ONS, 1500, 2014-01-17 18:55:39.734, foo, 2014-01-17 18:55:39.734, foo, 0}
+2014-01-17 18:55:39,735 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{6, 52nd Street, BILLYJOEL-06, MCD, ONS, 1600, 2014-01-17 18:55:39.735, foo, 2014-01-17 18:55:39.735, foo, 0}
+2014-01-17 18:55:39,736 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{7, Glass House, BILLYJOEL-07, MCD, ONS, 1700, 2014-01-17 18:55:39.736, foo, 2014-01-17 18:55:39.736, foo, 0}
+2014-01-17 18:55:39,736 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{8, Nylon Curtain, BILLYJOEL-08, MCD, ONS, 1800, 2014-01-17 18:55:39.736, foo, 2014-01-17 18:55:39.736, foo, 0}
+2014-01-17 18:55:39,739 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{9, Bridge, BILLYJOEL-09, MCD, ONS, 1900, 2014-01-17 18:55:39.739, foo, 2014-01-17 18:55:39.739, foo, 0}
+2014-01-17 18:55:39,740 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PRODUCT:{10, Storm Front, BILLYJOEL-10, MCD, ONS, 2000, 2014-01-17 18:55:39.74, foo, 2014-01-17 18:55:39.74, foo, 0}
+2014-01-17 18:55:39,740 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - PRODUCT:{... more several records}
+2014-01-17 18:55:39,752 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 20 rows are loaded to PRODUCT
+2014-01-17 18:55:39,753 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{1, 5, 3, 2013/01/09 23:59:59.000, 1, 1800, 1, 2014-01-17 18:55:39.753, foo, 2014-01-17 18:55:39.753, foo, 0}
+2014-01-17 18:55:39,755 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{2, 15, 7, 2013/11/27 16:16:16.000, 1, 1700, 1, 2014-01-17 18:55:39.754, foo, 2014-01-17 18:55:39.754, foo, 0}
+2014-01-17 18:55:39,756 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{3, 13, 3, 2013/01/08 22:56:29.235, 1, 1800, 1, 2014-01-17 18:55:39.755, foo, 2014-01-17 18:55:39.755, foo, 0}
+2014-01-17 18:55:39,757 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{4, 2, 5, 2013/11/17 02:13:00.000, 2, 1700, 1, 2014-01-17 18:55:39.757, foo, 2014-01-17 18:55:39.757, foo, 0}
+2014-01-17 18:55:39,758 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{5, 9, 11, 2014/01/20 23:12:59.000, 5, 1800, 1, 2014-01-17 18:55:39.758, foo, 2014-01-17 18:55:39.758, foo, 0}
+2014-01-17 18:55:39,759 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{6, 20, 2, 2008/01/18 16:32:01.000, 1, 2000, 1, 2014-01-17 18:55:39.759, foo, 2014-01-17 18:55:39.759, foo, 0}
+2014-01-17 18:55:39,761 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{7, 19, 9, 2012/02/14 23:59:59.999, 1, 1000, 0, 2014-01-17 18:55:39.76, foo, 2014-01-17 18:55:39.76, foo, 0}
+2014-01-17 18:55:39,762 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{8, 4, 7, 2013/11/25 16:23:00.000, 1, 1535, 1, 2014-01-17 18:55:39.761, foo, 2014-01-17 18:55:39.761, foo, 0}
+2014-01-17 18:55:39,763 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{9, 4, 10, 2013/01/07 23:59:59.000, 20, 1700, 1, 2014-01-17 18:55:39.763, foo, 2014-01-17 18:55:39.763, foo, 0}
+2014-01-17 18:55:39,764 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - PURCHASE:{10, 2, 10, 2013/11/17 02:13:00.345, 1, 1700, 0, 2014-01-17 18:55:39.764, foo, 2014-01-17 18:55:39.764, foo, 0}
+2014-01-17 18:55:39,765 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - PURCHASE:{... more several records}
+2014-01-17 18:55:39,817 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 60 rows are loaded to PURCHASE
+2014-01-17 18:55:39,817 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,818 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/90-vendor.xls)
+2014-01-17 18:55:39,818 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,866 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - venDor_Check:{1, 3.865, 0, f, abc}
+2014-01-17 18:55:39,867 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - venDor_Check:{2, 3.12, 1, t, def}
+2014-01-17 18:55:39,868 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - venDor_Check:{3, 7, 1, t, null}
+2014-01-17 18:55:39,868 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - venDor_Check:{4, 6.3, 0, f, obc}
+2014-01-17 18:55:39,869 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - venDor_Check:{5, 33, 1, t, jcb}
+2014-01-17 18:55:39,872 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 5 rows are loaded to venDor_Check
+2014-01-17 18:55:39,872 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,872 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-basic.xls)
+2014-01-17 18:55:39,878 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,904 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{901, foo from xls}
+2014-01-17 18:55:39,905 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{902, bar from xls}
+2014-01-17 18:55:39,905 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_QUOTED:{903, baz from xls}
+2014-01-17 18:55:39,907 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_QUOTED
+2014-01-17 18:55:39,907 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{811, foo811, null}
+2014-01-17 18:55:39,908 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{812, bar812, 811}
+2014-01-17 18:55:39,908 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_SELF_REFERENCE:{813, baz813, 811}
+2014-01-17 18:55:39,910 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_SELF_REFERENCE
+2014-01-17 18:55:39,911 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_CATEGORY:{FOO, FooCls, Classification of Foo}
+2014-01-17 18:55:39,911 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_CATEGORY:{BAR, BarCls, Classification of Bar}
+2014-01-17 18:55:39,912 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_CATEGORY:{QUX, QuxCls, Classification of Qux}
+2014-01-17 18:55:39,912 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_CATEGORY:{CRG, CorgeCls, Classification of Corge}
+2014-01-17 18:55:39,918 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 4 rows are loaded to WHITE_ALL_IN_ONE_CLS_CATEGORY
+2014-01-17 18:55:39,919 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{FOO, F01, FooOne, attr1}
+2014-01-17 18:55:39,920 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{FOO, F02, FooTwo, attr2}
+2014-01-17 18:55:39,920 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{FOO, F03, FooThree, attr3}
+2014-01-17 18:55:39,920 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{FOO, F04, FooFour, attr4}
+2014-01-17 18:55:39,921 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{BAR, B01, BarOne, attr1}
+2014-01-17 18:55:39,921 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{BAR, B02, BarTwo, attr2}
+2014-01-17 18:55:39,921 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{BAR, B03, BarThree, attr3}
+2014-01-17 18:55:39,922 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{BAR, B04, BarFour, attr4}
+2014-01-17 18:55:39,922 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{BAR, B05, BarFive, attr5}
+2014-01-17 18:55:39,923 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{QUX, Q01, QuxOne, attr1}
+2014-01-17 18:55:39,923 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - WHITE_ALL_IN_ONE_CLS_ELEMENT:{... more several records}
+2014-01-17 18:55:39,931 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 13 rows are loaded to WHITE_ALL_IN_ONE_CLS_ELEMENT
+2014-01-17 18:55:39,931 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,931 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-escaped-dfprop.xls)
+2014-01-17 18:55:39,932 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,941 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ESCAPED_DFPROP:{;@\, ab=cd}
+2014-01-17 18:55:39,941 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ESCAPED_DFPROP:{\};, }}{}
+2014-01-17 18:55:39,942 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_ESCAPED_DFPROP:{{=}, ;\\}
+2014-01-17 18:55:39,943 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_ESCAPED_DFPROP
+2014-01-17 18:55:39,943 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,944 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata1.xls)
+2014-01-17 18:55:39,944 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,951 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{1, foo}
+2014-01-17 18:55:39,952 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{2, bar}
+2014-01-17 18:55:39,952 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{3, baz}
+2014-01-17 18:55:39,954 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 3 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,954 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,954 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata2.xls)
+2014-01-17 18:55:39,955 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,959 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{4, qux}
+2014-01-17 18:55:39,959 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{5, quux}
+2014-01-17 18:55:39,960 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 2 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,961 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,961 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata3.xls)
+2014-01-17 18:55:39,961 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,965 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{6, corge}
+2014-01-17 18:55:39,967 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,967 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,967 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata4.xls)
+2014-01-17 18:55:39,967 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,971 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{7, grault}
+2014-01-17 18:55:39,973 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,973 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,973 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata5.xls)
+2014-01-17 18:55:39,974 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,981 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{8, graply}
+2014-01-17 18:55:39,985 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,987 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,987 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata6.xls)
+2014-01-17 18:55:39,988 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:39,995 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{9, waldo}
+2014-01-17 18:55:39,996 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:39,997 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:39,997 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata7.xls)
+2014-01-17 18:55:39,997 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:40,000 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{10, fred}
+2014-01-17 18:55:40,002 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:40,002 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:40,002 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata8.xls)
+2014-01-17 18:55:40,003 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:40,008 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{11, plugh}
+2014-01-17 18:55:40,012 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 1 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:40,012 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:40,016 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-loaddata9.xls)
+2014-01-17 18:55:40,016 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:40,026 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{12, xyzzy}
+2014-01-17 18:55:40,027 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_LOAD_DATA:{13, thud}
+2014-01-17 18:55:40,028 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 2 rows are loaded to WHITE_LOAD_DATA
+2014-01-17 18:55:40,029 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():126) - /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = 
+2014-01-17 18:55:40,029 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():127) - writeData(playsql/data/ut/xls/92-whitebox-xlsman.xls)
+2014-01-17 18:55:40,030 [main] INFO  (DfXlsDataHandlerImpl#writeSeveralData():128) - = = = = = = =/
+2014-01-17 18:55:40,039 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{1, bar, 2011/07/30 10:21:12.001}
+2014-01-17 18:55:40,040 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{2, f, 2011/07/30 10:21:12.008}
+2014-01-17 18:55:40,040 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{3, case sensitive, 2011/07/30 10:21:12.123}
+2014-01-17 18:55:40,041 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{4, null, 2011/07/30 10:21:12.012}
+2014-01-17 18:55:40,041 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{5, , 2014-01-17 18:55:40.041}
+2014-01-17 18:55:40,042 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{6, , 2011/07/30 00:00:00.000}
+2014-01-17 18:55:40,042 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{7, null, 2011/07/30 10:21:12.052}
+2014-01-17 18:55:40,043 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{8, quoted, 2011/07/30 10:21:12.520}
+2014-01-17 18:55:40,043 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{9, before
+after, 2011/07/30 10:21:12.000}
+2014-01-17 18:55:40,044 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1021) - WHITE_XLS_MAN:{10, before
+after, 2011/07/30 10:21:12.123}
+2014-01-17 18:55:40,044 [main] INFO  (DfAbsractDataWriter#handleLoggingInsert():1016) - WHITE_XLS_MAN:{... more several records}
+2014-01-17 18:55:40,046 [main] INFO  (DfAbsractDataWriter#noticeLoadedRowSize():1037) -  -> 14 rows are loaded to WHITE_XLS_MAN
+2014-01-17 18:55:40,048 [main] INFO  (DfLoadDataProcess#lazyCheckLoadedClassifiaction():379) - ...Checking implicit set of classification
+2014-01-17 18:55:40,063 [main] INFO  (DfDatabaseProperties#createMainSchemaConnection():946) - ...Creating connection to main schema: {exampledb.$$NoNameSchema$$ as main}
+2014-01-17 18:55:40,078 [main] INFO  (DfClassificationProperties#setupTableClassification():515) - ...Selecting for ServiceRank classification
+select SERVICE_RANK_CODE as cls_code, SERVICE_RANK_NAME as cls_name
+     , SERVICE_RANK_NAME as cls_alias, DESCRIPTION as cls_comment
+  from SERVICE_RANK order by DISPLAY_ORDER
+2014-01-17 18:55:40,084 [main] INFO  (DfClassificationProperties#setupTableClassification():515) - ...Selecting for Region classification
+select REGION_ID as cls_code, REGION_NAME as cls_name
+     , REGION_NAME as cls_alias, null as cls_comment
+  from REGION order by REGION_ID
+2014-01-17 18:55:40,088 [main] INFO  (DfClassificationProperties#setupTableClassification():515) - ...Selecting for SelfReference classification
+select loc.SELF_REFERENCE_ID as cls_code, loc.SELF_REFERENCE_NAME as cls_name
+     , loc.SELF_REFERENCE_NAME as cls_alias, 'of ' || rel.SELF_REFERENCE_NAME as cls_comment
+  from WHITE_SELF_REFERENCE loc left outer join WHITE_SELF_REFERENCE rel on loc.PARENT_ID = rel.SELF_REFERENCE_ID
+ order by loc.PARENT_ID is not null, loc.SELF_REFERENCE_ID
+2014-01-17 18:55:40,090 [main] INFO  (DfClassificationProperties#setupTableClassification():515) - ...Selecting for SubItemTable classification
+select MEMBER_STATUS_CODE as cls_code, MEMBER_STATUS_NAME as cls_name
+     , MEMBER_STATUS_NAME as cls_alias, DESCRIPTION as cls_comment, DISPLAY_ORDER as cls_key1, MEMBER_STATUS_NAME as cls_key2, null as cls_key3
+  from MEMBER_STATUS order by DISPLAY_ORDER
+2014-01-17 18:55:40,093 [main] DEBUG (DfClassificationAllInOneSqlExecutor#executeAllInOneSql():52) - / - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+2014-01-17 18:55:40,093 [main] DEBUG (DfClassificationAllInOneSqlExecutor#executeAllInOneSql():53) - The classification sql: select category.CLS_CATEGORY_NAME as classificationName
+     , category.DESCRIPTION as topComment
+     , element.CLS_ELEMENT_CODE as code
+     , element.CLS_ELEMENT_NAME as name
+     , element.CLS_ELEMENT_NAME as alias
+     , element.CLS_ELEMENT_NAME as comment
+  from WHITE_ALL_IN_ONE_CLS_ELEMENT element 
+    left outer join WHITE_ALL_IN_ONE_CLS_CATEGORY category
+      on element.CLS_CATEGORY_CODE = category.CLS_CATEGORY_CODE
+ order by classificationName, code
+2014-01-17 18:55:40,095 [main] DEBUG (DfClassificationAllInOneSqlExecutor#executeAllInOneSql():87) - - - - - - - - - /
+2014-01-17 18:55:40,101 [main] INFO  (DfClassificationResourceAnalyzer#analyze():113) - ...Analyzing classification in resource file: encoding=SHIFT_JIS
+2014-01-17 18:55:40,129 [main] INFO  (DfClassificationResourceAnalyzer#analyze():124) -     Flg, フラグを示す
+2014-01-17 18:55:40,130 [main] INFO  (DfClassificationResourceAnalyzer#analyze():124) -     MemberStatus, 会員ステータス: 会員の状態を示す
+2014-01-17 18:55:40,130 [main] INFO  (DfClassificationResourceAnalyzer#analyze():124) -     ProductStatus, 商品ステータス: 商品の状態を示す
+2014-01-17 18:55:40,133 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct NEW_ACCEPTABLE_FLG from SERVICE_RANK where NEW_ACCEPTABLE_FLG not in (1, 0)
+2014-01-17 18:55:40,135 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct NEW_ACCEPTABLE_FLG from SERVICE_RANK where NEW_ACCEPTABLE_FLG not in (1, 0)
+2014-01-17 18:55:40,139 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct NEW_ACCEPTABLE_FLG from SERVICE_RANK where NEW_ACCEPTABLE_FLG not in (1, 0)
+2014-01-17 18:55:40,155 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct MOBILE_LOGIN_FLG from MEMBER_LOGIN where MOBILE_LOGIN_FLG not in (1, 0)
+2014-01-17 18:55:40,161 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct UPDATE_USER from PRODUCT where UPDATE_USER not in ('FOO', 'BAR')
+2014-01-17 18:55:40,165 [main] INFO  (DfImplicitClassificationChecker#check():53) - select distinct PAYMENT_COMPLETE_FLG from PURCHASE where PAYMENT_COMPLETE_FLG not in (1, 0)
+2014-01-17 18:55:40,172 [main] INFO  (DfTakeFinallyProcess#takeFinally():219) - 
+2014-01-17 18:55:40,173 [main] INFO  (DfTakeFinallyProcess#takeFinally():220) - * * * * * * * **
+2014-01-17 18:55:40,173 [main] INFO  (DfTakeFinallyProcess#takeFinally():221) - *              *
+2014-01-17 18:55:40,173 [main] INFO  (DfTakeFinallyProcess#takeFinally():222) - * Take Finally *
+2014-01-17 18:55:40,173 [main] INFO  (DfTakeFinallyProcess#takeFinally():223) - *              *
+2014-01-17 18:55:40,174 [main] INFO  (DfTakeFinallyProcess#takeFinally():224) - * * * * * * * **
+2014-01-17 18:55:40,180 [main] INFO  (DfSqlFileFireMan#fire():65) - ...Firing: take-finally-00-assert.sql
+2014-01-17 18:55:40,181 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertCountZero#
+select count(*)
+  from MEMBER
+ where MEMBER_STATUS_CODE = 'FML'
+   and FORMALIZED_DATETIME is null
+2014-01-17 18:55:40,182 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListZero#
+select member.MEMBER_ID, member.MEMBER_NAME
+  from MEMBER member
+ where member.MEMBER_STATUS_CODE = 'WDL'
+   and not exists (select withdrawal.MEMBER_ID
+                     from MEMBER_WITHDRAWAL withdrawal
+                    where withdrawal.MEMBER_ID = member.MEMBER_ID
+       )
+2014-01-17 18:55:40,185 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListZero#
+select member.MEMBER_ID as MEMBER_ID
+     , count(member.MEMBER_ID) as SELECTED_COUNT
+     , min(address.MEMBER_ADDRESS_ID) as MIN_ADDRESS_ID
+     , max(address.MEMBER_ADDRESS_ID) as MAX_ADDRESS_ID
+     , CURRENT_DATE as TARGET_DATE
+  from MEMBER member
+    left outer join MEMBER_ADDRESS address
+      on member.MEMBER_ID = address.MEMBER_ID
+     and address.VALID_BEGIN_DATE <= CURRENT_DATE
+     and address.VALID_END_DATE >= CURRENT_DATE
+ group by member.MEMBER_ID
+   having count(member.MEMBER_ID) > 1
+2014-01-17 18:55:40,187 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListExists#
+select member.MEMBER_ID, member.MEMBER_NAME
+  from MEMBER member
+ where member.BIRTHDATE is null
+2014-01-17 18:55:40,188 [main] INFO  (DfDataAssertProvider#assertList():237) - [RESULT]: count=8
+{MEMBER_ID=3, MEMBER_NAME=Mijatovic}
+{MEMBER_ID=5, MEMBER_NAME=Milosevic}
+{MEMBER_ID=7, MEMBER_NAME=Og2000}
+{MEMBER_ID=8, MEMBER_NAME=Kezman}
+{MEMBER_ID=10, MEMBER_NAME=諸葛亮孔明}
+{MEMBER_ID=16, MEMBER_NAME=RobeltKovac}
+{MEMBER_ID=17, MEMBER_NAME=NikoKovac}
+{MEMBER_ID=20, MEMBER_NAME=諸葛瑾子瑜}
+2014-01-17 18:55:40,188 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListZero#
+select selfref.cnt
+  from (select count(*) as cnt
+          from WHITE_SELF_REFERENCE
+       ) selfref
+ where selfref.cnt <> 6
+2014-01-17 18:55:40,189 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListZero#
+select bin.cnt
+  from (select count(*) as cnt
+          from WHITE_BINARY
+       ) bin
+ where bin.cnt <> 3
+2014-01-17 18:55:40,190 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- #df:assertListZero#
+select delimiter.cnt
+  from (select count(*) as cnt
+          from WHITE_DELIMITER
+       ) delimiter
+ where delimiter.cnt <> 15
+2014-01-17 18:55:40,191 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=7 failure=0
+2014-01-17 18:55:40,192 [main] INFO  (DfSqlFileFireMan#fire():65) - ...Firing: take-finally-70-cipher.sql
+2014-01-17 18:55:40,192 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - update MEMBER_SECURITY set LOGIN_PASSWORD = sha1(LOGIN_PASSWORD)
+2014-01-17 18:55:40,194 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - update MEMBER set UPDATE_USER = hex(aes_encrypt(UPDATE_USER, 'himitsu'))
+2014-01-17 18:55:40,196 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=2 failure=0
+2014-01-17 18:55:40,197 [main] INFO  (DfSqlFileFireMan#fire():65) - ...Firing: take-finally-90-largedata.sql
+2014-01-17 18:55:40,198 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+-- creating index after loading large data 
+ALTER TABLE VENDOR_LARGE_DATA_REF ADD CONSTRAINT FK_VENDOR_LARGE_DATA_REF_DATA 
+	FOREIGN KEY (LARGE_DATA_ID) REFERENCES VENDOR_LARGE_DATA (LARGE_DATA_ID)
+2014-01-17 18:55:40,227 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - 
+ALTER TABLE VENDOR_LARGE_DATA_REF ADD CONSTRAINT FK_VENDOR_LARGE_DATA_REF_SELF 
+	FOREIGN KEY (SELF_PARENT_ID) REFERENCES VENDOR_LARGE_DATA_REF (LARGE_DATA_REF_ID)
+2014-01-17 18:55:40,259 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - CREATE INDEX IX_LARGE_DATA_STRING ON VENDOR_LARGE_DATA(STRING_INDEX)
+2014-01-17 18:55:40,276 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - CREATE INDEX IX_LARGE_DATA_NUMERIC_INTEGER ON VENDOR_LARGE_DATA(NUMERIC_INTEGER_INDEX)
+2014-01-17 18:55:40,338 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - CREATE INDEX IX_LARGE_DATA_REF_DATE ON VENDOR_LARGE_DATA_REF(DATE_INDEX)
+2014-01-17 18:55:40,359 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - CREATE INDEX IX_LARGE_DATA_REF_TIMESTAMP ON VENDOR_LARGE_DATA_REF(TIMESTAMP_INDEX)
+2014-01-17 18:55:40,383 [main] INFO  (DfSqlFileRunnerBase#traceSql():168) - CREATE INDEX IX_LARGE_DATA_REF_NULLABLE_DEC ON VENDOR_LARGE_DATA_REF(NULLABLE_DECIMAL_INDEX)
+2014-01-17 18:55:40,402 [main] INFO  (DfSqlFileRunnerBase#traceResult():172) -  -> success=7 failure=0
+2014-01-17 18:55:40,403 [main] INFO  (DfSqlFileFireMan#fire():90) - {Take Finally}: success=16 failure=0 (in 3 files)
+2014-01-17 18:55:40,406 [main] INFO  (DfDataSourceHandler#destroy():121) - ...closeReally()
+2014-01-17 18:55:40,409 [main] INFO  (DfDBFluteTaskUtil#logFinalMessage():150) - 
+_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
+[Final Message]: 00m21s520ms
+
+  DBFLUTE_CLIENT: {exampledb}
+    database  = mysql (MySQL 5.6.14-log)
+    language  = java
+    container = seasar
+    package   = com.example.dbflute.mysql.dbflute
+
+  DBFLUTE_ENVIRONMENT_TYPE: {}
+    driver = com.mysql.jdbc.Driver
+    url    = jdbc:mysql://localhost:43306/exampledb?characterEncoding=UTF-8
+    schema = {exampledb.$$NoNameSchema$$ as main}
+    user   = exampledb
+    props  = {user=exampledb, password=exampledb, rewriteBatchedStatements=true}
+    additionalSchema = nextexampledb.$$NoNameSchema$$(catalog)
+    repsEnvType      = ut
+    refreshProject   = dbflute-mysql-example
+
+ {Create Schema}: success=133 failure=0 (in 6 files)
+  o replace-schema-00-system.sql
+  o replace-schema-10-basic.sql
+  o replace-schema-20-view.sql
+  o replace-schema-50-procedure.sql
+  o replace-schema-90-vendorcheck.sql
+  o replace-schema-92-whitebox.sql
+
+ {Load Data}: loaded-files=24
+  (common)
+  o 10-master.xls
+  (ut)
+  o 90-VENDOR_LARGE_DATA.tsv
+  o 91-VENDOR_LARGE_DATA_REF.tsv
+  o 94-WHITE_QUOTED.tsv
+  o (and other tsv files...)
+  o 96-WHITE_SELF_REFERENCE.csv
+  o 98-WHITE_BINARY.csv
+  o 92-whitebox-suppressdefcheck.xls
+  o 20-member.xls
+  o 30-product.xls
+  o 90-vendor.xls
+  o 92-whitebox-basic.xls
+  o 92-whitebox-escaped-dfprop.xls
+  o 92-whitebox-loaddata1.xls
+  o 92-whitebox-loaddata2.xls
+  o 92-whitebox-loaddata3.xls
+  o 92-whitebox-loaddata4.xls
+  o (and other xls files...)
+
+ {Take Finally}: success=16 failure=0 (in 3 files)
+  o take-finally-00-assert.sql
+  o take-finally-70-cipher.sql
+  o take-finally-90-largedata.sql
+_/_/_/_/_/_/_/_/_/_/ {ReplaceSchema}

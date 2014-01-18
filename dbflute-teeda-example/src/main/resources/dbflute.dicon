@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd">
+
+<components namespace="dbflute">
+    <include path="j2ee.dicon"/>
+
+    <!-- The core component of DBFlute. (Basically internal components except for behaviorSelector) -->
+    <component class="com.example.dbflute.teeda.dbflute.allcommon.DBFluteInitializer"/>
+    <component name="behaviorCommandInvoker" class="com.example.dbflute.teeda.dbflute.allcommon.bhv.core.BehaviorCommandInvoker"/>
+    <component name="invokerAssistant" class="com.example.dbflute.teeda.dbflute.allcommon.ImplementedInvokerAssistant"/>
+    <component name="commonColumnAutoSetupper" class="com.example.dbflute.teeda.dbflute.allcommon.ImplementedCommonColumnAutoSetupper"/>
+    <component name="behaviorSelector" class="com.example.dbflute.teeda.dbflute.allcommon.CacheBehaviorSelector">
+        <destroyMethod name="destroy"/>
+    </component>
+
+    <!-- The component of S2Dao. -->
+    <component class="com.example.dbflute.teeda.dbflute.allcommon.s2dao.BeanMetaDataFactoryExtension"/>
+    <component class="com.example.dbflute.teeda.dbflute.allcommon.s2dao.PropertyTypeFactoryBuilderExtension"/>
+    <component class="com.example.dbflute.teeda.dbflute.allcommon.s2dao.SqlLogRegistryLatestSqlProvider"/>
+    <component class="org.seasar.dao.impl.AnnotationReaderFactoryImpl"/>
+    <component class="org.seasar.dao.impl.ValueTypeFactoryImpl"/>
+    <component class="org.seasar.dao.impl.DaoNamingConventionImpl"/>
+    <component class="org.seasar.dao.impl.NullBeanEnhancer"/>
+    <component class="org.seasar.dao.impl.DtoMetaDataFactoryImpl"/>
+    <component class="org.seasar.dao.impl.RelationPropertyTypeFactoryBuilderImpl"/>
+    <component class="org.seasar.dao.impl.DefaultTableNaming"/>
+    <component class="org.seasar.dao.impl.DefaultColumnNaming"/>
+    <component class="org.seasar.dao.impl.ProcedureMetaDataFactoryImpl"/>
+
+    <!-- The special value type. -->
+	<component name="dbfluteStringClobType" class="org.seasar.extension.jdbc.types.StringClobType" />
+	<component name="dbfluteBytesOidType" class="com.example.dbflute.teeda.dbflute.allcommon.s2dao.internal.valuetype.InternalBytesOidType" />
+
+    <component name="memberBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberBhv"/>
+    <component name="memberAddressBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberAddressBhv"/>
+    <component name="memberLoginBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberLoginBhv"/>
+    <component name="memberSecurityBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberSecurityBhv"/>
+    <component name="memberStatusBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberStatusBhv"/>
+    <component name="memberWithdrawalBhv" class="com.example.dbflute.teeda.dbflute.exbhv.MemberWithdrawalBhv"/>
+    <component name="productBhv" class="com.example.dbflute.teeda.dbflute.exbhv.ProductBhv"/>
+    <component name="productStatusBhv" class="com.example.dbflute.teeda.dbflute.exbhv.ProductStatusBhv"/>
+    <component name="purchaseBhv" class="com.example.dbflute.teeda.dbflute.exbhv.PurchaseBhv"/>
+    <component name="vendorCheckBhv" class="com.example.dbflute.teeda.dbflute.exbhv.VendorCheckBhv"/>
+    <component name="withdrawalReasonBhv" class="com.example.dbflute.teeda.dbflute.exbhv.WithdrawalReasonBhv"/>
+    <component name="summaryProductBhv" class="com.example.dbflute.teeda.dbflute.exbhv.SummaryProductBhv"/>
+
+</components>

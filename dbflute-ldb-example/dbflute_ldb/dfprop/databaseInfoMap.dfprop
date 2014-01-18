@@ -1,0 +1,24 @@
+# /---------------------------------------------------------------------------
+# databaseInfoMap: (Required)
+#
+# The database information for the tasks of DBFlute.
+# You should specify before your first generating.
+# 
+# o driver   -- The class name of JDBC-Driver.
+# o url      -- The URL for connecting database.
+# o schema   -- The schema name.
+# o user     -- The database user name.
+# o password -- The database password.
+# o propertiesMap -- The properties that depends on the database.
+# o variousMap    -- The various settings about JDBC task.
+#
+# *The line that starts with '#' means comment-out.
+#
+map:{
+	; driver		= org.apache.derby.jdbc.EmbeddedDriver
+	; url			= jdbc:derby:../src/test/resources/data-derby;create=true
+	; schema		= LDB
+	; user			= ldb
+	; password		= ldb
+}
+# ----------------/

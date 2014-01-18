@@ -1,0 +1,24 @@
+# /---------------------------------------------------------------------------
+# [Database Information]
+#   databaseInfoMap: 
+#     driver   -- The class name of JDBC-Driver.
+#     url      -- The url for connecting database.
+#     schema   -- The schema name.
+#     user     -- The database user name.
+#     password -- The database password.
+#     propertiesMap -- The properties that depends on the database.
+#     variousMap    -- The various settings about JDBC task.
+#
+# @FirstProperty
+map:{
+    ; driver   = oracle.jdbc.OracleDriver
+    ; url      = jdbc:oracle:thin:@localhost:1521:XE
+    ; schema   = BURIEXAMPLEDB
+    ; user     = buriexampledb
+    ; password = buriexampledb
+    ; propertiesMap = map:{}
+    ; variousMap = map:{
+        ; objectTypeTargetList=list:{TABLE;VIEW}
+    }
+}
+# ----------------/

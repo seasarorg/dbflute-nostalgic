@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+	"http://www.seasar.org/dtd/components21.dtd">
+
+<components namespace="dao">
+    <include path="j2ee-ldb.dicon"/>
+
+    <!-- S2Dao component. -->
+	<component class="org.seasar.dao.impl.FieldAnnotationReaderFactory"/>
+	<component class="org.seasar.dao.impl.ValueTypeFactoryImpl"/>
+    <component class="dbflute.ldb.allcommon.s2dao.LdS2DaoMetaDataFactoryImpl"/>
+    <component name="interceptor" class="dbflute.ldb.allcommon.s2dao.LdS2DaoInterceptor"/>
+
+    <!-- Common column setup interceptor. -->
+    <component name="commonColumnSetupBeforeInsertInterceptor" class="dbflute.ldb.allcommon.interceptor.LdCommonColumnSetupBeforeInsertInterceptor"/>
+    <component name="commonColumnSetupBeforeUpdateInterceptor" class="dbflute.ldb.allcommon.interceptor.LdCommonColumnSetupBeforeUpdateInterceptor"/>
+    <component name="commonColumnSetupBeforeDeleteInterceptor" class="dbflute.ldb.allcommon.interceptor.LdCommonColumnSetupBeforeDeleteInterceptor"/>
+
+    <!-- Dao selector. -->
+    <component name="daoSelector" class="dbflute.ldb.allcommon.LdCacheDaoSelector">
+  
+          <property name="authorBhv">authorBhv</property>
+          <property name="blackActionBhv">blackActionBhv</property>
+          <property name="blackActionLookupBhv">blackActionLookupBhv</property>
+          <property name="blackListBhv">blackListBhv</property>
+          <property name="bookBhv">bookBhv</property>
+          <property name="collectionBhv">collectionBhv</property>
+          <property name="collectionStatusBhv">collectionStatusBhv</property>
+          <property name="collectionStatusLookupBhv">collectionStatusLookupBhv</property>
+          <property name="garbageBhv">garbageBhv</property>
+          <property name="genreBhv">genreBhv</property>
+          <property name="lbUserBhv">lbUserBhv</property>
+          <property name="lendingBhv">lendingBhv</property>
+          <property name="lendingCollectionBhv">lendingCollectionBhv</property>
+          <property name="libraryBhv">libraryBhv</property>
+          <property name="nextLibraryBhv">nextLibraryBhv</property>
+          <property name="publisherBhv">publisherBhv</property>
+      
+    </component>
+
+    <!-- Original dao component. -->
+    
+    <!-- Original behavior aspect. -->
+    
+
+    <!-- AUTHOR -->
+  
+    <component name="authorDao" class="dbflute.ldb.exdao.LdAuthorDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="authorBhv" class="dbflute.ldb.exbhv.LdAuthorBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- BLACK_ACTION -->
+  
+    <component name="blackActionDao" class="dbflute.ldb.exdao.LdBlackActionDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="blackActionBhv" class="dbflute.ldb.exbhv.LdBlackActionBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- BLACK_ACTION_LOOKUP -->
+  
+    <component name="blackActionLookupDao" class="dbflute.ldb.exdao.LdBlackActionLookupDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="blackActionLookupBhv" class="dbflute.ldb.exbhv.LdBlackActionLookupBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- BLACK_LIST -->
+  
+    <component name="blackListDao" class="dbflute.ldb.exdao.LdBlackListDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="blackListBhv" class="dbflute.ldb.exbhv.LdBlackListBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- BOOK -->
+  
+    <component name="bookDao" class="dbflute.ldb.exdao.LdBookDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="bookBhv" class="dbflute.ldb.exbhv.LdBookBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- COLLECTION -->
+  
+    <component name="collectionDao" class="dbflute.ldb.exdao.LdCollectionDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="collectionBhv" class="dbflute.ldb.exbhv.LdCollectionBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- COLLECTION_STATUS -->
+  
+    <component name="collectionStatusDao" class="dbflute.ldb.exdao.LdCollectionStatusDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="collectionStatusBhv" class="dbflute.ldb.exbhv.LdCollectionStatusBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- COLLECTION_STATUS_LOOKUP -->
+  
+    <component name="collectionStatusLookupDao" class="dbflute.ldb.exdao.LdCollectionStatusLookupDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="collectionStatusLookupBhv" class="dbflute.ldb.exbhv.LdCollectionStatusLookupBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- GARBAGE -->
+  
+    <component name="garbageDao" class="dbflute.ldb.exdao.LdGarbageDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="garbageBhv" class="dbflute.ldb.exbhv.LdGarbageBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- GENRE -->
+  
+    <component name="genreDao" class="dbflute.ldb.exdao.LdGenreDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="genreBhv" class="dbflute.ldb.exbhv.LdGenreBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- LB_USER -->
+  
+    <component name="lbUserDao" class="dbflute.ldb.exdao.LdLbUserDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="lbUserBhv" class="dbflute.ldb.exbhv.LdLbUserBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- LENDING -->
+  
+    <component name="lendingDao" class="dbflute.ldb.exdao.LdLendingDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="lendingBhv" class="dbflute.ldb.exbhv.LdLendingBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- LENDING_COLLECTION -->
+  
+    <component name="lendingCollectionDao" class="dbflute.ldb.exdao.LdLendingCollectionDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="lendingCollectionBhv" class="dbflute.ldb.exbhv.LdLendingCollectionBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- LIBRARY -->
+  
+    <component name="libraryDao" class="dbflute.ldb.exdao.LdLibraryDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="libraryBhv" class="dbflute.ldb.exbhv.LdLibraryBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- NEXT_LIBRARY -->
+  
+    <component name="nextLibraryDao" class="dbflute.ldb.exdao.LdNextLibraryDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="nextLibraryBhv" class="dbflute.ldb.exbhv.LdNextLibraryBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+    <!-- PUBLISHER -->
+  
+    <component name="publisherDao" class="dbflute.ldb.exdao.LdPublisherDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+        
+    <component name="publisherBhv" class="dbflute.ldb.exbhv.LdPublisherBhv">
+        <aspect pointcut=".*Tx">requiredTx</aspect>
+        <aspect pointcut="delegateInsert.*, delegateCreate.*, delegateAdd.*">dao.commonColumnSetupBeforeInsertInterceptor</aspect>
+        <aspect pointcut="delegateUpdate.*, delegateModify.*, delegateStore.*">dao.commonColumnSetupBeforeUpdateInterceptor</aspect>
+        <aspect pointcut="delegateDelete.*, delegateRemove.*">dao.commonColumnSetupBeforeDeleteInterceptor</aspect>
+        
+    </component>
+      
+
+    <!-- BOOK_AUTHOR (as customize dao) -->
+
+    <component name="bookAuthorDao" class="dbflute.ldb.exdao.customize.LdBookAuthorDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+
+    <!-- BOOK_PUBLISHER (as customize dao) -->
+
+    <component name="bookPublisherDao" class="dbflute.ldb.exdao.customize.LdBookPublisherDao">
+        <aspect>dao.interceptor</aspect>
+    </component>
+
+</components>

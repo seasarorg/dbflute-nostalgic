@@ -1,0 +1,9 @@
+map:{
+	; baseDtoPackage = dbflute.ldb.other.simpledto.bs
+	; extendedDtoPackage = dbflute.ldb.other.simpledto
+	; baseDtoPrefix = Bs
+	; baseDtoSuffix = Dto
+	; extendedDtoPrefix = 
+	; extendedDtoSuffix = Dto
+	; dtoMapperPackage = dbflute.ldb.other.simpledto.mapper
+}

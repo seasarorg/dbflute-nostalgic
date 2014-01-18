@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lucy-config PUBLIC "-//LUCY//DTD LUCY//EN" "http://www.lucy.org/dtd/lucy-config.dtd">
+<lucy-config>
+	<component name="dataSource" class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean" instance="singleton">
+		<inject method="setUniqueResourceName">"NONXADBMS"</inject>
+		<inject method="setDriverClassName">"org.h2.jdbcx.JdbcDataSource"</inject>
+		<inject method="setUser">"sa"</inject>
+		<inject method="setPassword"></inject>
+		<inject method="setUrl">exampleDbUrl.object</inject>
+		<inject method="setPoolSize">20</inject>
+		<inject method="setBorrowConnectionTimeout">60</inject>
+		<destroy method="close"/>
+	</component>
+
+	<component name="txMan" class="com.atomikos.icatch.jta.UserTransactionManager" instance="singleton">
+		<inject method="setForceShutdown">true</inject>
+		<init method="init"/>
+		<destroy method="close"/>
+	</component>
+
+	<component name="usrTx" class="com.atomikos.icatch.jta.UserTransactionImp" instance="singleton">
+		<inject method="setTransactionTimeout">300</inject>
+	</component>
+
+	<component name="txPro" class="org.t2framework.lucy.tx.JTATransactionProcesser" instance="singleton">
+		<inject method="setTxManager">txMan</inject>
+		<inject method="setUserTx">usrTx</inject>
+	</component>
+	
+	<!-- The example original component for building connection string of H2. -->
+    <component name="exampleDbUrl" class="com.example.dbflute.lucy.EmbeddedH2UrlFactoryBean">
+        <inject method="setUrlSuffix">"/exampledb/exampledb"</inject>
+        <inject method="setReferenceClassName">"com.example.dbflute.lucy.dbflute.allcommon.DBCurrent"</inject>
+    </component>
+
+	<!-- 
+	XA with H2 have the exception when you execute update() and select().
+	The exception says 'Timeout trying to lock table [TABLE]'.
+	<component name="dataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" instance="singleton">
+		<inject method="setXaDataSourceClassName">"org.h2.jdbcx.JdbcDataSource"</inject>
+		<inject method="setUniqueResourceName">"jdbc/h2/xaDatasource"</inject>
+		<inject method="setPoolSize">20</inject>
+		<inject method="setBorrowConnectionTimeout">60</inject>
+		<inject method="setXaProperties"><![CDATA[
+			p = dataSource.XaProperties;
+			p["URL"]=exampleDbUrl.object;
+			p["User"]="sa";
+			p["Password"]="";
+			p;
+		]]></inject>
+		<destroy method="close"/>
+	</component>
+    -->
+</lucy-config>

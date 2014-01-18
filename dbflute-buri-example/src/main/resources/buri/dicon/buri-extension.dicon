@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.3//EN"
+	"http://www.seasar.org/dtd/components23.dtd">
+<components>
+	<include path="buri/dicon/buri-share.dicon"/>
+
+	<component name="extensionDAF" class="org.escafe.buri.dataaccess.impl.BuriDataAccessDummyFactoryImpl">
+	</component>
+
+	<component name="ScriptDataAccessFactory" class="com.example.dbflute.buri.dbflute.allcommon.plugin.buri.FixedBuriDataAccessScriptFactoryImpl">
+		<destroyMethod name="dispose"></destroyMethod>
+	</component>
+</components>

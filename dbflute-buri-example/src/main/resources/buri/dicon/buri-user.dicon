@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container 2.3//EN"
+	"http://www.seasar.org/dtd/components23.dtd">
+<!-- * * * * * * * * * * * * * * * * -->
+<!-- Buri Required Settings for User -->
+<!-- * * * * * * * * * * * * * * * * -->
+<components>
+	<include path="aop.dicon" />
+
+	<!-- * * * * * * * * * * * * *-->
+	<!-- Buri Total Configuration -->
+	<!-- * * * * * * * * * * * * *-->
+	<component class="org.escafe.buri.common.util.BuriConfigurationImpl">
+	</component>
+
+	<!-- * * * * * * * * * * * *-->
+	<!-- Buri Data Access Rules -->
+	<!-- * * * * * * * * * * * *-->
+	<!-- The next version Buri will support extension point! (2009/03/11)
+	<component name="userDataFieldRuleSet" class="org.escafe.buri.compiler.util.BuriDataFieldProcRuleSet">
+		<initMethod name="addDataAccessRules"><arg>
+			<component name="dbFluteToDataAccessRule"
+			           class="com.example.dbflute.buri.dbflute.allcommon.plugin.buri.BehaviorToDataAccessRule">
+			</component></arg>
+		</initMethod>
+	</component>
+	-->
+
+	<!-- * * * * * * * * * * * * * -->
+	<!-- Buri Engine Configuration -->
+	<!-- * * * * * * * * * * * * * -->
+	<component name="BuriEngineConfig" class="org.escafe.buri.engine.impl.BuriEngineConfigImpl">
+		<!-- addResourceConfig(String fileName, String packageName) -->
+		<!-- addResourceConfig(String fileName, String packageName, ParticipantProvider provider) -->
+		<initMethod name="addResourceConfig">
+			<arg>"basic.xpdl"</arg>
+			<arg>"文書管理"</arg>
+			<arg>participantProvider</arg>
+		</initMethod>
+	</component>
+
+	<!-- * * * * * * * * * * * -->
+	<!-- Participant Handling  -->
+	<!-- * * * * * * * * * * * -->
+	<component class="com.example.dbflute.buri.dbflute.allcommon.plugin.buri.BasicBuriUserDataProvider" />
+	<component name="participantProvider" class="com.example.dbflute.buri.dbflute.allcommon.plugin.buri.BasicParticipantProvider" />
+</components>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE components PUBLIC "-//SEASAR2.1//DTD S2Container//EN"
+    "http://www.seasar.org/dtd/components21.dtd">
+
+<components namespace="dbflute">
+    <include path="j2ee-ldb.dicon"/>
+
+    <!-- The core component of DBFlute. (Basically internal components except for behaviorSelector) -->
+    <component class="dbflute.ldb.allcommon.LdDBFluteInitializer"/>
+    <component name="behaviorCommandInvoker" class="dbflute.ldb.allcommon.bhv.core.LdBehaviorCommandInvoker"/>
+    <component name="invokerAssistant" class="dbflute.ldb.allcommon.LdImplementedInvokerAssistant"/>
+    <component name="commonColumnAutoSetupper" class="dbflute.ldb.allcommon.LdImplementedCommonColumnAutoSetupper"/>
+    <component name="ldBehaviorSelector" class="dbflute.ldb.allcommon.LdCacheBehaviorSelector">
+        <destroyMethod name="destroy"/>
+    </component>
+
+    <!-- The component of S2Dao. -->
+    <component class="dbflute.ldb.allcommon.s2dao.LdBeanMetaDataFactoryExtension"/>
+    <component class="dbflute.ldb.allcommon.s2dao.LdPropertyTypeFactoryBuilderExtension"/>
+    <component class="dbflute.ldb.allcommon.s2dao.LdSqlLogRegistryLatestSqlProvider"/>
+    <component class="org.seasar.dao.impl.AnnotationReaderFactoryImpl"/>
+    <component class="org.seasar.dao.impl.ValueTypeFactoryImpl"/>
+    <component class="org.seasar.dao.impl.DaoNamingConventionImpl"/>
+    <component class="org.seasar.dao.impl.NullBeanEnhancer"/>
+    <component class="org.seasar.dao.impl.DtoMetaDataFactoryImpl"/>
+    <component class="org.seasar.dao.impl.RelationPropertyTypeFactoryBuilderImpl"/>
+    <component class="org.seasar.dao.impl.DefaultTableNaming"/>
+    <component class="org.seasar.dao.impl.DefaultColumnNaming"/>
+    <component class="org.seasar.dao.impl.ProcedureMetaDataFactoryImpl"/>
+
+    <!-- The special value type. -->
+	<component name="dbfluteStringClobType" class="org.seasar.extension.jdbc.types.StringClobType" />
+	<component name="dbfluteBytesOidType" class="dbflute.ldb.allcommon.s2dao.internal.valuetype.LdInternalBytesOidType" />
+
+    <component name="ldAuthorBhv" class="dbflute.ldb.exbhv.LdAuthorBhv"/>
+    <component name="ldBlackActionBhv" class="dbflute.ldb.exbhv.LdBlackActionBhv"/>
+    <component name="ldBlackActionLookupBhv" class="dbflute.ldb.exbhv.LdBlackActionLookupBhv"/>
+    <component name="ldBlackListBhv" class="dbflute.ldb.exbhv.LdBlackListBhv"/>
+    <component name="ldBookBhv" class="dbflute.ldb.exbhv.LdBookBhv"/>
+    <component name="ldCollectionBhv" class="dbflute.ldb.exbhv.LdCollectionBhv"/>
+    <component name="ldCollectionStatusBhv" class="dbflute.ldb.exbhv.LdCollectionStatusBhv"/>
+    <component name="ldCollectionStatusLookupBhv" class="dbflute.ldb.exbhv.LdCollectionStatusLookupBhv"/>
+    <component name="ldGarbageBhv" class="dbflute.ldb.exbhv.LdGarbageBhv"/>
+    <component name="ldGarbagePlusBhv" class="dbflute.ldb.exbhv.LdGarbagePlusBhv"/>
+    <component name="ldGenreBhv" class="dbflute.ldb.exbhv.LdGenreBhv"/>
+    <component name="ldLbUserBhv" class="dbflute.ldb.exbhv.LdLbUserBhv"/>
+    <component name="ldLendingBhv" class="dbflute.ldb.exbhv.LdLendingBhv"/>
+    <component name="ldLendingCollectionBhv" class="dbflute.ldb.exbhv.LdLendingCollectionBhv"/>
+    <component name="ldLibraryBhv" class="dbflute.ldb.exbhv.LdLibraryBhv"/>
+    <component name="ldLibraryTypeLookupBhv" class="dbflute.ldb.exbhv.LdLibraryTypeLookupBhv"/>
+    <component name="ldLibraryUserBhv" class="dbflute.ldb.exbhv.LdLibraryUserBhv"/>
+    <component name="ldNextLibraryBhv" class="dbflute.ldb.exbhv.LdNextLibraryBhv"/>
+    <component name="ldPublisherBhv" class="dbflute.ldb.exbhv.LdPublisherBhv"/>
+
+</components>

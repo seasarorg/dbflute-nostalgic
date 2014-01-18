@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<!DOCTYPE components PUBLIC "-//SEASAR//DTD S2Container//EN"
+"http://www.seasar.org/dtd/components.dtd">
+<components>
+
+	<!-- =============================================================== -->
+	<!--                                                  J2EE-Component -->
+	<!--                                                  ============== -->
+	<component name="xaDataSource" class="org.seasar.extension.dbcp.impl.XADataSourceImpl">
+		<property name="driverClassName">"org.apache.derby.jdbc.EmbeddedDriver"</property>
+		<property name="URL">
+			"jdbc:derby:" 
+				+ @org.seasar.framework.util.ResourceUtil@getBuildDir(@dbflute.DBFluteTestCase@class).getCanonicalPath() 
+				+ "/data-derby"
+		</property>
+		<property name="user">"ldb"</property>
+		<property name="password">"ldb"</property>
+	<!--
+		<property name="driverClassName">"org.firebirdsql.jdbc.FBDriver"</property>
+		<property name="URL">"jdbc:firebirdsql:localhost/3050:c:/Firebird/firedata/LDB.fdb"</property>
+		<property name="user">"sysdba"</property>
+		<property name="password">"masterkey"</property>
+	-->
+	</component>
+
+	<component name="transactionManager" class="org.seasar.extension.jta.TransactionManagerImpl"/>
+	<component name="requiredTx" class="org.seasar.extension.tx.RequiredInterceptor"/>
+	<component name="requiresNewTx" class="org.seasar.extension.tx.RequiresNewInterceptor"/>
+	<component name="mandatoryTx" class="org.seasar.extension.tx.MandatoryInterceptor"/>
+
+	<component class="dbflute.ldb.allcommon.s2dao.LdS2DaoStatementFactory"/>
+	<component class="dbflute.ldb.allcommon.s2dao.LdFetchNarrowingResultSetFactory"/>
+	
+	<!-- <component class="org.seasar.extension.jdbc.impl.BasicStatementFactory"/> -->
+	<!-- <component class="org.seasar.extension.jdbc.impl.BasicResultSetFactory"/> -->
+	
+	<component class="org.seasar.extension.dbcp.impl.ConnectionPoolImpl">
+		<property name="timeout">600</property>
+		<property name="maxPoolSize">10</property>
+		<destroyMethod name="close"/>
+	</component>
+
+	<component class="org.seasar.extension.dbcp.impl.DataSourceImpl"/>
+	
+</components>

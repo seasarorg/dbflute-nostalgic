@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lucy-config PUBLIC "-//LUCY//DTD LUCY//EN" "http://www.lucy.org/dtd/lucy-config.dtd">
+<lucy-config>
+    <!-- The components of DBFlute Runtime. -->
+    <component name="introduction" class="com.example.dbflute.lucy.dbflute.allcommon.DBFluteInitializer"/>
+    <component name="invokerAssistant" class="com.example.dbflute.lucy.dbflute.allcommon.ImplementedInvokerAssistant">
+        <inject method="setDataSource">dataSource</inject>
+        <inject method="setIntroduction">introduction</inject>
+    </component>
+    <component name="commonColumnAutoSetupper" class="com.example.dbflute.lucy.dbflute.allcommon.ImplementedCommonColumnAutoSetupper"/>
+    <component name="behaviorSelector" class="com.example.dbflute.lucy.dbflute.allcommon.ImplementedBehaviorSelector">
+        <inject method="setContainer">lucy</inject>
+    </component>
+    <component name="behaviorCommandInvoker" class="org.seasar.dbflute.bhv.core.BehaviorCommandInvoker">
+        <inject method="setInvokerAssistant">invokerAssistant</inject>
+    </component>
+    
+    <!-- The components of Behavior. -->
+	<component name="memberBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="memberAddressBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberAddressBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="memberLoginBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberLoginBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="memberSecurityBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberSecurityBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="memberStatusBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberStatusBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="memberWithdrawalBhv" class="com.example.dbflute.lucy.dbflute.exbhv.MemberWithdrawalBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="productBhv" class="com.example.dbflute.lucy.dbflute.exbhv.ProductBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="productStatusBhv" class="com.example.dbflute.lucy.dbflute.exbhv.ProductStatusBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="purchaseBhv" class="com.example.dbflute.lucy.dbflute.exbhv.PurchaseBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="vendorCheckBhv" class="com.example.dbflute.lucy.dbflute.exbhv.VendorCheckBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="withdrawalReasonBhv" class="com.example.dbflute.lucy.dbflute.exbhv.WithdrawalReasonBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+	<component name="summaryProductBhv" class="com.example.dbflute.lucy.dbflute.exbhv.SummaryProductBhv">
+        <inject method="setBehaviorCommandInvoker">behaviorCommandInvoker</inject>
+        <inject method="setBehaviorSelector">behaviorSelector</inject>
+        <inject method="setCommonColumnAutoSetupper">commonColumnAutoSetupper</inject>
+    </component>
+</lucy-config>

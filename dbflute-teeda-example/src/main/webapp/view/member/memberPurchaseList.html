@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../../css/mainte.css" />
+	<title>会員購入履歴</title>
+</head>
+
+<body>
+<form id="editForm">
+<h1>会員購入履歴</h1>
+<span id="allMessages"></span>
+<hr />
+<div class="memberInformation">
+<table>
+	<tr>
+		<td>会員ID</td>
+		<td><span id="memberId">111</span><input id="memberId-hidden" type="hidden" /></td>
+	</tr>
+	<tr>
+		<td>会員名</td>
+		<td><span id="memberName">田中 太郎</span></td>
+	</tr>
+</table>
+</div>
+<div class="purchaseList">
+<table>
+	<thead>
+		<tr>
+			<th>購入日時</th>
+			<th>商品名</th>
+			<th>商品価格</th>
+			<th>商品数量</th>
+			<th>支払状態</th>
+			<th>&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody id="purchaseListItems">
+		<tr id="row" style="y">
+			<td><span id="purchaseDatetime">2007/11/11 23:23:23</span></td>
+			<td><span id="productName">鉛筆</span></td>
+			<td><span id="purchasePrice">1,234</span></td>
+			<td><span id="purchaseCount">12</span></td>
+			<td>
+				<div id="isPaymentComplete">支払済</div>
+				<div id="isNotPaymentComplete">未払い</div>
+			</td>
+			<td><input id="doDelete" type="submit" value="削除" /></td>
+		</tr>
+	</tbody>
+</table>
+<input type="hidden" id="purchaseListItemsSave"></input>
+<input type="hidden" id="purchaseListItemsSessionSave"></input>
+</div>
+<te:include te:src="/include/pagingnavi.html" /><input id="targetPage" type="hidden" />
+<a id="goSearch" href="search.html">会員一覧</a>
+</form>
+</body>
+</html>

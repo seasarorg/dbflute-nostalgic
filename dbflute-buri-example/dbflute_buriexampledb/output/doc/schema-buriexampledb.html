@@ -1,0 +1,3911 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title>buriexampledb schema</title>
+	<style type="text/css">
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Verdana, "Hiragino Kaku Gothic Pro", "ヒラギノ角ゴ Pro W3", Meiryo, "メイリオ", "MS P Gothic", "MS Pゴシック", sans-serif;
+	font-size: 80%;
+	margin: 10px 5px 5px 15px;
+	background-color: #ffffe0;
+}
+
+/* heading */
+h1 {
+	font-size: 1.5em;
+	border-bottom: 2px solid #af0000;
+	border-top: 2px solid #af0000;
+}
+h2 {
+	margin: 30px 0 5px 0;
+	font-size: 1.8em;
+	border-bottom: 2px solid #af0000;
+	border-left: 10px solid #af0000;
+	text-indent: 10px;
+}
+h3 {
+	padding: 0 0 0 10px;
+	margin: 1em 10% 0 0;
+	border-top: double 3px #af0000;
+	border-bottom: solid 1px #333333;
+	font-size: 1.5em;
+	color: #333333;
+}
+h4 {
+	padding: 0 0 0 10px;
+	margin: 1em 10% 0 1em;
+	border-top: solid 1px #af0000;
+	border-bottom: solid 1px #af0000;
+	font-size: 1.4em;
+	color: #333333;
+}
+
+/* total info */
+.updatedate {
+	text-align: right;
+}
+.mainschema {
+	text-align: right;
+}
+.sublink {
+	text-align: right;
+}
+
+/* table */
+table {
+	border-collapse:collapse;
+}
+table, th {
+	border: 1px solid #555;
+}
+th {
+	background-color: #cc9;
+	font-size: 0.8em;
+}
+td {
+	border-bottom: 1px dotted #aaa;
+	border-left: 1px solid #555;
+	padding:2px;
+}
+.rownumhead {
+	text-align: center;
+	font-size: 0.4em;
+}
+.rownumcell {
+	text-align: center;
+	font-size: 0.4em;
+	color: #444;
+}
+.schemacell {
+	font-size: 0.8em;
+	white-space: nowrap;
+}
+.aliascell {
+	white-space: nowrap;
+}
+.flgcell {
+	text-align: center;
+}
+.flgplus {
+	font-size: 0.7em;
+}
+.typecell {
+	font-size: 0.6em;
+}
+.sizecell {
+	text-align: center;
+	font-size: 0.8em;
+}
+.defvalcell {
+	text-align: center;
+	font-size: 0.6em;
+}
+.relcell {
+	font-size: 0.6em;
+}
+.commentcell {
+	font-size: 0.7em;
+}
+.subcell {
+	font-size: 0.6em;
+}
+.comcolcell {
+	color: #666;
+}
+.optcell {
+	font-style: italic;
+}
+.additionalpk {
+	font-style: italic;
+}
+.additionalfk {
+	font-style: italic;
+}
+.clstypecell {
+	text-align: center;
+	font-size: 0.8em;
+}
+
+/* inner table */
+table.child {
+	margin: 3px;
+}
+table.child th {
+	font-size: 0.7em;
+}
+table.child, table.child td, table.child th {
+	border-top: none;
+	border-left: none;
+	border-bottom: 1px solid #aaa;
+	border-right: 1px solid #aaa;
+}
+
+/* table supplementary info */
+span.tableschema {
+	font-size: 0.6em;
+}
+span.bqpcount {
+	font-size: 0.5em;
+}
+dl.bqplist {
+	padding-left: 2em;
+}
+dl.bqplist dt {
+	display: list-item;
+	font-size: 1.3em;
+	margin-top: 0.3em;
+}
+dl.bqplist dd {
+	padding-left: 1em;
+}
+dl.bqplist dd pre {
+	font-size: 1.1em;
+}
+dl.bqplist dd.subinfo {
+	padding-left: 2em;
+}
+dl.bqplist dd.subinfo span.sqlap {
+	font-style: italic;
+	color: #002266;
+}
+dl.bqplist dd.subinfo span.file {
+	font-style: italic;
+	color: #002266;
+}
+dl.bqplist dd.subinfo span.ctet {
+	color: green;
+}
+dl.bqplist dd.subinfo span.pmb {
+	color: green;
+}
+dl.procedurelist {
+	padding-left: 2em;
+}
+dl.procedurelist dt {
+	display: list-item;
+	font-size: 1.3em;
+	margin-top: 0.3em;
+}
+dl.procedurelist dt span.type {
+	font-size: 0.7em;
+	color: green;
+}
+dl.procedurelist dd {
+	padding-left: 1em;
+}
+dl.procedurelist dd pre {
+	font-size: 1.1em;
+}
+dl.procedurelist dd.column {
+	font-style: italic;
+	padding-left: 2em;
+}
+dl.procedurelist dd.column span.attrs {
+	font-size: 0.7em;
+	color: #125699;
+}
+dl.procedurelist dd.column span.type {
+	font-size: 0.9em;
+	color: green;
+}
+dl.procedurelist dd.column pre {
+	padding-left: 1em;
+}
+	</style>
+</head>
+
+<body>
+<h1>Schema for buriexampledb (oracle)</h1>
+<p class="mainschema">generated from <strong>BURIEXAMPLEDB</strong></p>
+<p class="sublink"><a href="#cdef">Classification Definition</a></p>
+<p class="sublink"><a href="#outsidesql">OutsideSql List</a></p>
+
+<h2>Table List</h2>
+<table summary="Tables in the Schema">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>EntityName</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="aliascell"></td>
+		<td><a href="#buribranch" title="type=TABLE, primaryKey={BRANCHID}, nameLength=10, columnCount=7">BURIBRANCH</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#buridata" class="additionalfk" title="FK_BURIBRANCH_BURIDATA">BURIDATA</a>, <a href="#buripath" class="additionalfk" title="FK_BURIBRANCH_BURIPATH">BURIPATH</a></td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIBRANCH">BURISTATE</a></td>
+		<td class="subcell">BuriBranch</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="aliascell"></td>
+		<td><a href="#buridata" title="type=TABLE, primaryKey={DATAID}, nameLength=8, columnCount=6">BURIDATA</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIDATA">BURISTATE</a>, <a href="#buribranch" class="additionalfk" title="FK_BURIBRANCH_BURIDATA">BURIBRANCH</a></td>
+		<td class="subcell">BuriData</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="aliascell"></td>
+		<td><a href="#buridatapathhistory" title="type=TABLE, primaryKey={HISTORYID}, nameLength=19, columnCount=8">BURIDATAPATHHISTORY</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriDataPathHistory</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="aliascell"></td>
+		<td><a href="#buripath" title="type=TABLE, primaryKey={PATHID}, nameLength=8, columnCount=4">BURIPATH</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIPATH">BURISTATE</a>, <a href="#buribranch" class="additionalfk" title="FK_BURIBRANCH_BURIPATH">BURIBRANCH</a></td>
+		<td class="subcell">BuriPath</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="aliascell"></td>
+		<td><a href="#buristate" title="type=TABLE, primaryKey={STATEID}, nameLength=9, columnCount=14">BURISTATE</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#buripath" class="additionalfk" title="FK_BURISTATE_BURIPATH">BURIPATH</a>, <a href="#buridata" class="additionalfk" title="FK_BURISTATE_BURIDATA">BURIDATA</a>, <a href="#buribranch" class="additionalfk" title="FK_BURISTATE_BURIBRANCH">BURIBRANCH</a></td>
+		<td class="relcell"><a href="#buristateuser" class="additionalfk" title="FK_BURISTATEUSER_BURISTATE">BURISTATEUSER</a></td>
+		<td class="subcell">BuriState</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="aliascell"></td>
+		<td><a href="#buristateundolog" title="type=TABLE, primaryKey={STATEUNDOLOGID}, nameLength=16, columnCount=14">BURISTATEUNDOLOG</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriStateUndoLog</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="aliascell"></td>
+		<td><a href="#buristateuser" title="type=TABLE, primaryKey={STATEUSERID}, nameLength=13, columnCount=5">BURISTATEUSER</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATEUSER_BURISTATE">BURISTATE</a>, <a href="#buriuser" class="additionalfk" title="FK_BURISTATEUSER_BURIUSER">BURIUSER</a></td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriStateUser</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="aliascell"></td>
+		<td><a href="#buritransaction" title="type=TABLE, primaryKey={BTID}, nameLength=15, columnCount=3">BURITRANSACTION</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriTransaction</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="aliascell"></td>
+		<td><a href="#buriuser" title="type=TABLE, primaryKey={BURIUSERID}, nameLength=8, columnCount=3">BURIUSER</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#buristateuser" class="additionalfk" title="FK_BURISTATEUSER_BURIUSER">BURISTATEUSER</a></td>
+		<td class="subcell">BuriUser</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="aliascell"></td>
+		<td><a href="#document" title="type=TABLE, primaryKey={ID}, nameLength=8, columnCount=3">DOCUMENT</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#buri_all_round_state" class="additionalfk" title="FK_DOCUMENT_BURI_ALL_ROUND_STATE_1: fixedCondition=&quot;$$foreignAlias$$.STATUS_PATH_NAME like '文書管理.文書公開.%' and $$foreignAlias$$.INTERNAL_DATA_TYPE = 'com.example.dbflute.buri.dbflute.exentity.Document'&quot;">BURI_ALL_ROUND_STATE(_文書管理_文書公開)</a></td>
+		<td class="relcell"><a href="#buri_all_round_state" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_DOCUMENT_IMPLICIT: comment=This relation is auto-detected as implicit reverse FK.">BURI_ALL_ROUND_STATE</a></td>
+		<td class="subcell">Document</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="aliascell"></td>
+		<td><a href="#mst_role" title="type=TABLE, primaryKey={ROLE_ID}, nameLength=8, columnCount=7">MST_ROLE</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#mst_user_role" title="FK_USER_ROLE_MST_ROLE">MST_USER_ROLE</a></td>
+		<td class="subcell">MstRole</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="aliascell"></td>
+		<td><a href="#mst_user" title="type=TABLE, primaryKey={USER_ID}, nameLength=8, columnCount=8">MST_USER</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#mst_user_role" title="FK_USER_ROLE_MST_USER">MST_USER_ROLE</a></td>
+		<td class="subcell">MstUser</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="aliascell"></td>
+		<td><a href="#mst_user_role" title="type=TABLE, primaryKey={USER_ROLE_ID}, nameLength=13, columnCount=8">MST_USER_ROLE</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#mst_role" title="FK_USER_ROLE_MST_ROLE">MST_ROLE</a>, <a href="#mst_user" title="FK_USER_ROLE_MST_USER">MST_USER</a></td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">MstUserRole</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="aliascell"></td>
+		<td><a href="#buripathdata" title="type=VIEW, primaryKey={}, nameLength=12, columnCount=13">BURIPATHDATA</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriPathData</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">15</td>
+		<td class="aliascell"></td>
+		<td><a href="#buripathdatauser" title="type=VIEW, primaryKey={}, nameLength=16, columnCount=16">BURIPATHDATAUSER</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriPathDataUser</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">16</td>
+		<td class="aliascell"></td>
+		<td><a href="#buripathhistorydata" title="type=VIEW, primaryKey={}, nameLength=19, columnCount=16">BURIPATHHISTORYDATA</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriPathHistoryData</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">17</td>
+		<td class="aliascell"></td>
+		<td><a href="#buripathhistorydatauser" title="type=VIEW, primaryKey={}, nameLength=23, columnCount=19">BURIPATHHISTORYDATAUSER</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriPathHistoryDataUser</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">18</td>
+		<td class="aliascell"></td>
+		<td><a href="#buri_all_round_state" title="type=VIEW, primaryKey={}, nameLength=20, columnCount=11">BURI_ALL_ROUND_STATE</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell"><a href="#document" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_DOCUMENT_IMPLICIT: comment=This relation is auto-detected as implicit reverse FK.">DOCUMENT</a></td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriAllRoundState</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">19</td>
+		<td class="aliascell"></td>
+		<td><a href="#buri_all_round_state_history" title="type=VIEW, primaryKey={}, nameLength=28, columnCount=11">BURI_ALL_ROUND_STATE_HISTORY</a></td>
+		<td class="typecell">VIEW</td>
+		<td class="relcell"><a href="#document" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_HISTORY_DOCUMENT_1: fixedCondition=&quot;$$localAlias$$.INTERNAL_DATA_TYPE = 'com.example.dbflute.buri.dbflute.exentity.Document'&quot;">DOCUMENT(_文書管理_文書公開)</a></td>
+		<td class="relcell">&nbsp;</td>
+		<td class="subcell">BuriAllRoundStateHistory</td>
+	</tr>
+	</tbody>
+</table>
+
+  <h2 id="buribranch" title="type=TABLE, primaryKey={BRANCHID}, nameLength=10, columnCount=7">
+BURIBRANCH
+</h2>
+<table summary="Columns in BURIBRANCH">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048750">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHBRANCHID">BRANCHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIBRANCH">BURISTATE</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">branchId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF2BURIBRANCH(PARENTBRANCHID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHPARENTBRANCHID">PARENTBRANCHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">parentBranchId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF1BURIBRANCH(PATHID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buripath" class="additionalfk" title="FK_BURIBRANCH_BURIPATH">BURIPATH</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF3BURIBRANCH(DATAID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buridata" class="additionalfk" title="FK_BURIBRANCH_BURIDATA">BURIDATA</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHPROCESSDATE">PROCESSDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">processDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIBRANCHBTID">BTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">btid</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="BURIBRANCHVERSIONNO">VERSIONNO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+</table>
+  <h2 id="buridata" title="type=TABLE, primaryKey={DATAID}, nameLength=8, columnCount=6">
+BURIDATA
+</h2>
+<table summary="Columns in BURIDATA">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048757">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATADATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIDATA">BURISTATE</a>,<br /><a href="#buribranch" class="additionalfk" title="FK_BURIBRANCH_BURIDATA">BURIBRANCH</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE1BURIDATA(PKEYVAL, DATATYPE)">o<span class="flgplus">+</span></td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPKEYVAL">PKEYVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 250 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE2BURIDATA(PKEYNUM, DATATYPE)">o<span class="flgplus">+</span></td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPKEYNUM">PKEYNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE1BURIDATA(PKEYVAL, DATATYPE), XIE2BURIDATA(PKEYNUM, DATATYPE)">o<span class="flgplus">+</span></td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATADATATYPE">DATATYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATATABLENAME">TABLENAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">tableName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF1BURIDATA(INSERTUSERID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAINSERTUSERID">INSERTUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+</table>
+  <h2 id="buridatapathhistory" title="type=TABLE, primaryKey={HISTORYID}, nameLength=19, columnCount=8">
+BURIDATAPATHHISTORY
+</h2>
+<table summary="Columns in BURIDATAPATHHISTORY">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048754">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYHISTORYID">HISTORYID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">historyId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF3BURIDATAPATHHI(PATHID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF4BURIDATAPATHHI(DATAID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYACTION">ACTION</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 50 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">action</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYBURIUSERID">BURIUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">buriUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYBTID">BTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">btid</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIDATAPATHHISTORYINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+</table>
+  <h2 id="buripath" title="type=TABLE, primaryKey={PATHID}, nameLength=8, columnCount=4">
+BURIPATH
+</h2>
+<table summary="Columns in BURIPATH">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048761">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATE_BURIPATH">BURISTATE</a>,<br /><a href="#buribranch" class="additionalfk" title="FK_BURIBRANCH_BURIPATH">BURIBRANCH</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE1BURIPATH(PATHNAME)">o</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE2BURIPATH(REALPATHNAME)">o</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHREALPATHNAME">REALPATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">realPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE3BURIPATH(PATHTYPE)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHPATHTYPE">PATHTYPE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathType</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+</table>
+  <h2 id="buristate" title="type=TABLE, primaryKey={STATEID}, nameLength=9, columnCount=14">
+BURISTATE
+</h2>
+<table summary="Columns in BURISTATE">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048734">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATESTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#buristateuser" class="additionalfk" title="FK_BURISTATEUSER_BURISTATE">BURISTATEUSER</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF1BURISTATE(PATHID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buripath" class="additionalfk" title="FK_BURISTATE_BURIPATH">BURIPATH</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF2BURISTATE(DATAID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buridata" class="additionalfk" title="FK_BURISTATE_BURIDATA">BURIDATA</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF4BURISTATE(BRANCHID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEBRANCHID">BRANCHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buribranch" class="additionalfk" title="FK_BURISTATE_BURIBRANCH">BURIBRANCH</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">branchId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERIDVAL">USERIDVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERIDNUM">USERIDNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEPARTICIPANTNAME">PARTICIPANTNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEPARTICIPANTTYPE">PARTICIPANTTYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEBTID">BTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">btid</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF6BURISTATE(AUTORUNTIME)">o</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF5BURISTATE(PROCESSDATE)">o</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEPROCESSDATE">PROCESSDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">processDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEABORTDATE">ABORTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">abortDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="BURISTATEVERSIONNO">VERSIONNO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+</table>
+  <h2 id="buristateundolog" title="type=TABLE, primaryKey={STATEUNDOLOGID}, nameLength=16, columnCount=14">
+BURISTATEUNDOLOG
+</h2>
+<table summary="Columns in BURISTATEUNDOLOG">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048742">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGSTATEUNDOLOGID">STATEUNDOLOGID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateUndoLogId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF1BURISTATEUNDOLOG(STATEID)">o</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGSTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGBRANCHID">BRANCHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">branchId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGUSERIDVAL">USERIDVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGUSERIDNUM">USERIDNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGBTID">BTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">btid</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGPROCESSDATE">PROCESSDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">processDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGABORTDATE">ABORTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">abortDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="BURISTATEUNDOLOGVERSIONNO">VERSIONNO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUNDOLOGCREATEBTID">CREATEBTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">createBtid</td>
+		<td class="subcell">Long</td>
+	</tr>
+</table>
+  <h2 id="buristateuser" title="type=TABLE, primaryKey={STATEUSERID}, nameLength=13, columnCount=5">
+BURISTATEUSER
+</h2>
+<table summary="Columns in BURISTATEUSER">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048726">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERSTATEUSERID">STATEUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF1BURISTATEUSER(STATEID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERSTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buristate" class="additionalfk" title="FK_BURISTATEUSER_BURISTATE">BURISTATE</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIF2BURISTATEUSER(BURIUSERID)">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERBURIUSERID">BURIUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buriuser" class="additionalfk" title="FK_BURISTATEUSER_BURIUSER">BURIUSER</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">buriUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURISTATEUSERDELETEDATE">DELETEDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">deleteDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+</table>
+  <h2 id="buritransaction" title="type=TABLE, primaryKey={BTID}, nameLength=15, columnCount=3">
+BURITRANSACTION
+</h2>
+<table summary="Columns in BURITRANSACTION">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048746">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURITRANSACTIONBTID">BTID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">btid</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURITRANSACTIONINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="BURITRANSACTIONVERSIONNO">VERSIONNO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+</table>
+  <h2 id="buriuser" title="type=TABLE, primaryKey={BURIUSERID}, nameLength=8, columnCount=3">
+BURIUSER
+</h2>
+<table summary="Columns in BURIUSER">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048763">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIUSERBURIUSERID">BURIUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#buristateuser" class="additionalfk" title="FK_BURISTATEUSER_BURIUSER">BURISTATEUSER</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">buriUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE2BURIUSER(USERIDVAL, USERIDNUM)">o<span class="flgplus">+</span></td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIUSERUSERIDVAL">USERIDVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell" title="XIE2BURIUSER(USERIDVAL, USERIDNUM)">o<span class="flgplus">+</span></td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIUSERUSERIDNUM">USERIDNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+</table>
+  <h2 id="document" title="type=TABLE, primaryKey={ID}, nameLength=8, columnCount=3">
+DOCUMENT
+</h2>
+<table summary="Columns in DOCUMENT">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="SYS_C0048767 :: sequence=SEQ_DOCUMENT_ID:minimum(1),maximum(9223372036854775807),increment(1)">o</td>
+		<td class="flgcell">o</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="DOCUMENTID">ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#buri_all_round_state" class="additionalfk" title="FK_DOCUMENT_BURI_ALL_ROUND_STATE_1: fixedCondition=&quot;$$foreignAlias$$.STATUS_PATH_NAME like '文書管理.文書公開.%' and $$foreignAlias$$.INTERNAL_DATA_TYPE = 'com.example.dbflute.buri.dbflute.exentity.Document'&quot;">BURI_ALL_ROUND_STATE(_文書管理_文書公開)</a>&nbsp;</td>
+		<td class="relcell"><a href="#buri_all_round_state" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_DOCUMENT_IMPLICIT: comment=This relation is auto-detected as implicit reverse FK.">BURI_ALL_ROUND_STATE</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">id</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="DOCUMENTTITLE">TITLE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 64 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">title</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="DOCUMENTCONTENT">CONTENT</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 1024 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">content</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+  <h2 id="mst_role" title="type=TABLE, primaryKey={ROLE_ID}, nameLength=8, columnCount=7">
+MST_ROLE
+</h2>
+<table summary="Columns in MST_ROLE">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="PK_MST_ROLE">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_ROLEROLE_ID">ROLE_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 9 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#mst_user_role" title="FK_USER_ROLE_MST_ROLE">MST_USER_ROLE</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">roleId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_ROLEROLE_NAME">ROLE_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">roleName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_ROLEREGISTER_USER">REGISTER_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_ROLEREGISTER_DATETIME">REGISTER_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_ROLEUPDATE_USER">UPDATE_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_ROLEUPDATE_DATETIME">UPDATE_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="MST_ROLEVERSION_NO">VERSION_NO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 8 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">Integer</td>
+	</tr>
+</table>
+  <h2 id="mst_user" title="type=TABLE, primaryKey={USER_ID}, nameLength=8, columnCount=8">
+MST_USER
+</h2>
+<table summary="Columns in MST_USER">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="PK_MST_USER">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USERUSER_ID">USER_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 9 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#mst_user_role" title="FK_USER_ROLE_MST_USER">MST_USER_ROLE</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USERUSER_CODE">USER_CODE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userCode</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USERUSER_NAME">USER_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USERREGISTER_USER">REGISTER_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USERREGISTER_DATETIME">REGISTER_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USERUPDATE_USER">UPDATE_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USERUPDATE_DATETIME">UPDATE_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="MST_USERVERSION_NO">VERSION_NO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 8 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">Integer</td>
+	</tr>
+</table>
+  <h2 id="mst_user_role" title="type=TABLE, primaryKey={USER_ROLE_ID}, nameLength=13, columnCount=8">
+MST_USER_ROLE
+</h2>
+<table summary="Columns in MST_USER_ROLE">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="PK_MST_USER_ROLE">o</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USER_ROLEUSER_ROLE_ID">USER_ROLE_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 9 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userRoleId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USER_ROLEUSER_ID">USER_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 9 </td>
+		<td class="relcell"><a href="#mst_user" title="FK_USER_ROLE_MST_USER">MST_USER</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="MST_USER_ROLEROLE_ID">ROLE_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 9 </td>
+		<td class="relcell"><a href="#mst_role" title="FK_USER_ROLE_MST_ROLE">MST_ROLE</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">roleId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USER_ROLEREGISTER_USER">REGISTER_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USER_ROLEREGISTER_DATETIME">REGISTER_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">registerDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USER_ROLEUPDATE_USER">UPDATE_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 20 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateUser</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell comcolcell"></td>
+		<td class="comcolcell" id="MST_USER_ROLEUPDATE_DATETIME">UPDATE_DATETIME</td>
+		<td class="typecell">DATE</td>
+		<td class="sizecell"> 7 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">updateDatetime</td>
+		<td class="subcell">Date</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell optcell"></td>
+		<td class="optcell" id="MST_USER_ROLEVERSION_NO">VERSION_NO</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 8 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">versionNo</td>
+		<td class="subcell">Integer</td>
+	</tr>
+</table>
+  <h2 id="buripathdata" title="type=VIEW, primaryKey={}, nameLength=12, columnCount=13">
+BURIPATHDATA
+</h2>
+<table summary="Columns in BURIPATHDATA">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAREALPATHNAME">REALPATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">realPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPATHTYPE">PATHTYPE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathType</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPKEYNUM">PKEYNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPKEYVAL">PKEYVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 250 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATADATATYPE">DATATYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATATABLENAME">TABLENAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">tableName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATADATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATASTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPARTICIPANTNAME">PARTICIPANTNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAPARTICIPANTTYPE">PARTICIPANTTYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+  <h2 id="buripathdatauser" title="type=VIEW, primaryKey={}, nameLength=16, columnCount=16">
+BURIPATHDATAUSER
+</h2>
+<table summary="Columns in BURIPATHDATAUSER">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERREALPATHNAME">REALPATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">realPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPATHTYPE">PATHTYPE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathType</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPKEYNUM">PKEYNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPKEYVAL">PKEYVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 250 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERDATATYPE">DATATYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERTABLENAME">TABLENAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">tableName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERSTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPARTICIPANTNAME">PARTICIPANTNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERPARTICIPANTTYPE">PARTICIPANTTYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERBURIUSERID">BURIUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">buriUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">15</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERUSERIDVAL">USERIDVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">16</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHDATAUSERUSERIDNUM">USERIDNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+</table>
+  <h2 id="buripathhistorydata" title="type=VIEW, primaryKey={}, nameLength=19, columnCount=16">
+BURIPATHHISTORYDATA
+</h2>
+<table summary="Columns in BURIPATHHISTORYDATA">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAREALPATHNAME">REALPATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">realPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPATHTYPE">PATHTYPE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathType</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPKEYNUM">PKEYNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPKEYVAL">PKEYVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 250 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATADATATYPE">DATATYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATATABLENAME">TABLENAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">tableName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATADATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATASTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPROCESSDATE">PROCESSDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">processDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAABORTDATE">ABORTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">abortDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">15</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPARTICIPANTNAME">PARTICIPANTNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">16</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAPARTICIPANTTYPE">PARTICIPANTTYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+  <h2 id="buripathhistorydatauser" title="type=VIEW, primaryKey={}, nameLength=23, columnCount=19">
+BURIPATHHISTORYDATAUSER
+</h2>
+<table summary="Columns in BURIPATHHISTORYDATAUSER">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPATHID">PATHID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPATHNAME">PATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERREALPATHNAME">REALPATHNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">realPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPATHTYPE">PATHTYPE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 22 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pathType</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPKEYNUM">PKEYNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPKEYVAL">PKEYVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 250 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">pkeyVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERDATATYPE">DATATYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERTABLENAME">TABLENAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">tableName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERDATAID">DATAID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">dataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERSTATEID">STATEID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">stateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERAUTORUNTIME">AUTORUNTIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">autoRunTime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">12</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERINSERTDATE">INSERTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">insertDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">13</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPROCESSDATE">PROCESSDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">processDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">14</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERABORTDATE">ABORTDATE</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">abortDate</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">15</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPARTICIPANTNAME">PARTICIPANTNAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">16</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERPARTICIPANTTYPE">PARTICIPANTTYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">17</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERBURIUSERID">BURIUSERID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">buriUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">18</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERUSERIDVAL">USERIDVAL</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdVal</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">19</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURIPATHHISTORYDATAUSERUSERIDNUM">USERIDNUM</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">userIdNum</td>
+		<td class="subcell">Long</td>
+	</tr>
+</table>
+  <h2 id="buri_all_round_state" title="type=VIEW, primaryKey={}, nameLength=20, columnCount=11">
+BURI_ALL_ROUND_STATE
+</h2>
+<table summary="Columns in BURI_ALL_ROUND_STATE">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_STATE_ID">INTERNAL_STATE_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalStateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATESTATUS_UPDATE_DATETIME">STATUS_UPDATE_DATETIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusUpdateDatetime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEPARTICIPANT_NAME">PARTICIPANT_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEPARTICIPANT_TYPE">PARTICIPANT_TYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_PATH_ID">INTERNAL_PATH_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalPathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATESTATUS_PATH_NAME">STATUS_PATH_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_DATA_ID">INTERNAL_DATA_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalDataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_PK_VALUE">INTERNAL_PK_VALUE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#document" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_DOCUMENT_IMPLICIT: comment=This relation is auto-detected as implicit reverse FK.">DOCUMENT</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalPkValue</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_DATA_TYPE">INTERNAL_DATA_TYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalDataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATEINTERNAL_USER_ID">INTERNAL_USER_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATESTATUS_UPDATE_USER">STATUS_UPDATE_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusUpdateUser</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+  <h2 id="buri_all_round_state_history" title="type=VIEW, primaryKey={}, nameLength=28, columnCount=11">
+BURI_ALL_ROUND_STATE_HISTORY
+</h2>
+<table summary="Columns in BURI_ALL_ROUND_STATE_HISTORY">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Alias</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_STATE_ID">INTERNAL_STATE_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalStateId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYSTATUS_UPDATE_DATETIME">STATUS_UPDATE_DATETIME</td>
+		<td class="typecell">TIMESTAMP(6)</td>
+		<td class="sizecell"> 11, 6 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusUpdateDatetime</td>
+		<td class="subcell">Timestamp</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYPARTICIPANT_NAME">PARTICIPANT_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYPARTICIPANT_TYPE">PARTICIPANT_TYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">participantType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_PATH_ID">INTERNAL_PATH_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalPathId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYSTATUS_PATH_NAME">STATUS_PATH_NAME</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusPathName</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_DATA_ID">INTERNAL_DATA_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalDataId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_PK_VALUE">INTERNAL_PK_VALUE</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell"><a href="#document" class="additionalfk" title="FK_BURI_ALL_ROUND_STATE_HISTORY_DOCUMENT_1: fixedCondition=&quot;$$localAlias$$.INTERNAL_DATA_TYPE = 'com.example.dbflute.buri.dbflute.exentity.Document'&quot;">DOCUMENT(_文書管理_文書公開)</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalPkValue</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_DATA_TYPE">INTERNAL_DATA_TYPE</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 200 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalDataType</td>
+		<td class="subcell">String</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">10</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYINTERNAL_USER_ID">INTERNAL_USER_ID</td>
+		<td class="typecell">NUMBER</td>
+		<td class="sizecell"> 18 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">internalUserId</td>
+		<td class="subcell">Long</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">11</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="aliascell"></td>
+		<td id="BURI_ALL_ROUND_STATE_HISTORYSTATUS_UPDATE_USER">STATUS_UPDATE_USER</td>
+		<td class="typecell">VARCHAR2</td>
+		<td class="sizecell"> 100 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="subcell">statusUpdateUser</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+
+<h2 id="cdef">Classification Definition</h2>
+<table summary="Classifications in the Schema">
+	<thead>
+	<tr>
+		<th>Classification</th>
+		<th>Type</th>
+		<th>Top Comment</th>
+		<th>Definition</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Flg</td>
+		<td class="clstypecell"> implicit</td>
+		<td>フラグを示す</td>
+		<td>
+			<table class="child">
+			<tr>
+				<th id="FlgCls">Code</th>
+				<th>Name</th>
+				<th>Alias</th>
+				<th>Comment</th>
+			</tr>
+			<tr>
+				<td>1</td>
+				<td>True</td>
+				<td>はい</td>
+				<td>有効を示す</td>
+			</tr>
+			<tr>
+				<td>0</td>
+				<td>False</td>
+				<td>いいえ</td>
+				<td>無効を示す</td>
+			</tr>
+			</table>
+		</td>
+	</tr>
+	</tbody>
+</table>
+
+<h2 id="outsidesql">OutsideSql List</h2>
+<h3 id="procedure">Procedure</h3>
+<dl class="procedurelist">
+</dl>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<Package xmlns="http://www.wfmc.org/2002/XPDL1.0" xmlns:xpdl="http://www.wfmc.org/2002/XPDL1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Id="newpkg" Name="文書管理" xsi:schemaLocation="http://www.wfmc.org/2002/XPDL1.0 http://wfmc.org/standards/docs/TC-1025_schema_10_xpdl.xsd">
+    <PackageHeader>
+        <XPDLVersion>1.0</XPDLVersion>
+        <Vendor>Together</Vendor>
+        <Created>2009-07-05 17:16:10</Created>
+    </PackageHeader>
+    <WorkflowProcesses>
+        <WorkflowProcess Id="newpkg_wp1" Name="文書公開">
+            <ProcessHeader>
+                <Created>2009-07-05 17:16:10</Created>
+            </ProcessHeader>
+            <Participants>
+                <Participant Id="newpkg_wp1_par1" Name="DummyParticipant">
+                    <ParticipantType Type="ROLE"/>
+                </Participant>
+            </Participants>
+            <Activities>
+                <Activity Id="newpkg_wp1_act1" Name="文書作成">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Manual/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act2" Name="レビュー待ち">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Manual/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act3" Name="レビュー通し">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Automatic/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act4" Name="差し戻し">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Manual/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act5" Name="公開待ち">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Manual/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act6" Name="公開">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Automatic/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act7" Name="公開中">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Manual/>
+                    </FinishMode>
+                </Activity>
+                <Activity Id="newpkg_wp1_act8" Name="公開終了">
+                    <Implementation>
+                        <No/>
+                    </Implementation>
+                    <Performer>newpkg_wp1_par1</Performer>
+                    <StartMode>
+                        <Automatic/>
+                    </StartMode>
+                    <FinishMode>
+                        <Automatic/>
+                    </FinishMode>
+                </Activity>
+            </Activities>
+            <Transitions>
+                <Transition Id="newpkg_wp1_tra1" From="newpkg_wp1_act1" To="newpkg_wp1_act2"/>
+                <Transition Id="newpkg_wp1_tra2" From="newpkg_wp1_act2" To="newpkg_wp1_act3">
+                    <Condition Type="CONDITION"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="action" Value="問題なし"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition Id="newpkg_wp1_tra3" From="newpkg_wp1_act2" To="newpkg_wp1_act4">
+                    <Condition Type="CONDITION"/>
+                    <ExtendedAttributes>
+                        <ExtendedAttribute Name="action" Value="手直し必要"/>
+                    </ExtendedAttributes>
+                </Transition>
+                <Transition Id="newpkg_wp1_tra4" From="newpkg_wp1_act4" To="newpkg_wp1_act2"/>
+                <Transition Id="newpkg_wp1_tra5" From="newpkg_wp1_act3" To="newpkg_wp1_act5"/>
+                <Transition Id="newpkg_wp1_tra6" From="newpkg_wp1_act5" To="newpkg_wp1_act6"/>
+                <Transition Id="newpkg_wp1_tra7" From="newpkg_wp1_act6" To="newpkg_wp1_act7"/>
+                <Transition Id="newpkg_wp1_tra8" From="newpkg_wp1_act7" To="newpkg_wp1_act8"/>
+            </Transitions>
+        </WorkflowProcess>
+    </WorkflowProcesses>
+</Package>

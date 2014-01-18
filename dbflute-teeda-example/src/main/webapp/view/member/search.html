@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:te="http://www.seasar.org/teeda/extension" xml:lang="ja" lang="ja">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="../../css/mainte.css" />
+	<title>会員一覧</title>
+</head>
+
+<body>
+<form id="searchForm">
+<h1>会員検索</h1>
+<span id="allMessages"></span>
+<hr />
+<div class="condition">
+<table>
+	<tr>
+		<td><label>会員名</label></td>
+		<td><input type="text" id="condMemberName"></input></td>
+	</tr>
+	<tr>
+		<td><label>購入商品名</label></td>
+		<td><input type="text" id="condPurchaseProductName"></input></td>
+	</tr>
+	<tr>
+		<td><label>会員ステータス</label></td>
+		<td>
+			<select id="condMemberStatus">
+				<option value="hoge">テスト会員</option>
+			</select>
+			<input type="hidden" id="condMemberStatusItemsSave"></input>
+			<input type="hidden" id="resultItemsSave"></input>
+		</td>
+	</tr>
+	<tr>
+		<td><label>未払いあり</label></td>
+		<td><input type="checkbox" id="condUnpaid"></input></td>
+	</tr>
+	<tr>
+		<td><label>正式会員日</label></td>
+		<td><input type="text" id="condFormalizedDateFrom" class="T_date" size="14"></input>～<input type="text" id="condFormalizedDateTo" class="T_date" size="14"></input></td>
+	</tr>
+</table>
+<input type="submit" id="doSearch" value="検索"></input>
+</div>
+<hr />
+
+<input id="goCreate" type="submit" value="新規登録" />
+<div class="result">
+<table>
+	<thead>
+		<tr>
+			<th>会員ID</th>
+			<th>会員名</th>
+			<th>会員ステータス</th>
+			<th>正式会員日</th>
+			<th>会員更新日時</th>
+			<th>編集</th>
+			<th>購入履歴</th>
+		</tr>
+	</thead>
+	<tbody id="resultItems">
+		<tr id="row" style="y">
+			<td><span id="memberId">111</span></td>
+			<td><span id="memberName">ミルコクロコップ</span></td>
+			<td><span id="memberStatusName">ハイキック会員</span></td>
+			<td><span id="formalizedDate">2007/11/11</span></td>
+			<td><span id="updateDatetime">2007/12/12 21:21:21</span></td>
+			<td>
+				<div id="isEditable"><a id="goEdit" href="./edit.html?memberId=111">編集</a></div>
+				<div id="isNotEditable">編集不可</div>
+			</td>
+			<td>
+				<div id="isPurchaseLinkVisible">
+					<a id="goMemberPurchaseList" href="./memberPurchaseList.html?memberId=111">購入履歴</a>
+				</div>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+<te:include te:src="/include/pagingnavi.html" />
+</form>
+</body>
+</html>
